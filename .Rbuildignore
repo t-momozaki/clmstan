@@ -1,0 +1,12 @@
+^.*\.Rproj$
+^\.git$
+^\.github$
+^\.gitignore$
+^\.Rbuildignore$
+^\.RData$
+^\.Rhistory$
+^\.Rproj\.user$
+^NOTICE$
+^_pkgdown\.yml$
+^docs$
+^vignettes/articles$

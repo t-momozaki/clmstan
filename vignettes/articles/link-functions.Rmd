@@ -1,0 +1,342 @@
+---
+title: "Link Functions in clmstan"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 8,
+  fig.height = 5,
+  message = FALSE,
+  warning = FALSE
+)
+```
+
+## Overview
+
+clmstan supports 11 link functions for cumulative link models---more than any
+other CLM package. This article explains:
+- The mathematical properties of each link function
+- Visual comparison of their CDFs
+- How to choose the best link for your data
+
+```{r setup}
+library(clmstan)
+library(ordinal)
+library(loo)
+data(wine)
+```
+
+## Link Functions at a Glance
+
+### Standard Links (5)
+
+Standard links have no adjustable parameters:
+
+| Link | Distribution | Characteristics |
+|------|--------------|-----------------|
+| **logit** | Logistic | Default, proportional odds interpretation |
+| **probit** | Normal | Symmetric, latent variable interpretation |
+| **cloglog** | Gumbel (max) | Right-skewed, proportional hazards |
+| **loglog** | Gumbel (min) | Left-skewed |
+| **cauchit** | Cauchy | Heavy tails, robust to outliers |
+
+### Flexible Links (6)
+
+Flexible links have parameters that can be fixed or estimated from data:
+
+| Link | Parameters | Special Cases |
+|------|------------|---------------|
+| **tlink** | $\text{df} > 0$ | $\text{df} \to \infty$: probit |
+| **aranda_ordaz** | $\lambda > 0$ | $\lambda = 1$: logit; $\lambda \to 0$: cloglog |
+| **gev** | $\xi \in \mathbb{R}$ | $\xi = 0$: loglog (Gumbel) |
+| **sp** | $r > 0$, base | $r = 1$: base distribution |
+| **log_gamma** | $\lambda \in \mathbb{R}$ | $\lambda = 0$: probit |
+| **aep** | $\theta_1, \theta_2 > 0$ | $\theta_1 = \theta_2 = 2$: similar to probit |
+
+```{r show-links}
+supported_links()
+```
+
+## Visual Comparison
+
+The cumulative distribution function (CDF) determines how probabilities are
+mapped to the latent scale. Different CDFs produce different model behavior,
+especially for extreme categories.
+
+### Standard Link CDFs
+
+```{r plot-standard-cdfs}
+x <- seq(-4, 4, length.out = 200)
+
+cdfs <- data.frame(
+  x = x,
+  logit = plogis(x),
+  probit = pnorm(x),
+  cloglog = 1 - exp(-exp(x)),
+  loglog = exp(-exp(-x)),
+  cauchit = pcauchy(x)
+)
+
+par(mar = c(4, 4, 2, 1))
+plot(x, cdfs$logit, type = "l", lwd = 2, col = 1,
+     xlab = "x", ylab = "F(x)", main = "Standard Link CDFs",
+     ylim = c(0, 1))
+lines(x, cdfs$probit, lwd = 2, col = 2)
+lines(x, cdfs$cloglog, lwd = 2, col = 3)
+lines(x, cdfs$loglog, lwd = 2, col = 4)
+lines(x, cdfs$cauchit, lwd = 2, col = 5, lty = 2)
+legend("bottomright",
+       legend = c("logit", "probit", "cloglog", "loglog", "cauchit"),
+       col = 1:5, lwd = 2, lty = c(1, 1, 1, 1, 2))
+abline(h = 0.5, lty = 3, col = "gray")
+```
+
+**Key observations:**
+
+- **logit** and **probit**: Nearly identical symmetric curves
+- **cloglog**: Right-skewed (slower approach to 1)
+- **loglog**: Left-skewed (slower approach to 0)
+- **cauchit**: Heavy tails (slower approach to both 0 and 1)
+
+### t-link: Adjustable Tail Weight
+
+The t-link interpolates between cauchit ($\text{df}=1$) and probit
+($\text{df} \to \infty$):
+
+```{r plot-tlink}
+x <- seq(-4, 4, length.out = 200)
+
+par(mar = c(4, 4, 2, 1))
+plot(x, pnorm(x), type = "l", lwd = 2, col = "black", lty = 2,
+     xlab = "x", ylab = "F(x)", main = "t-link CDFs (varying df)",
+     ylim = c(0, 1))
+lines(x, pt(x, df = 1), lwd = 2, col = 2)
+lines(x, pt(x, df = 2), lwd = 2, col = 3)
+lines(x, pt(x, df = 3), lwd = 2, col = 4)
+lines(x, pt(x, df = 4), lwd = 2, col = 5)
+lines(x, pt(x, df = 8), lwd = 2, col = 6)
+lines(x, pt(x, df = 30), lwd = 2, col = 7)
+legend("bottomright",
+       legend = c("probit (df=Inf)", "df=1 (Cauchy)", "df=2", "df=3",
+                  "df=4", "df=8", "df=30"),
+       col = c(1, 2:7), lwd = 2, lty = c(2, rep(1, 6)))
+abline(h = 0.5, lty = 3, col = "gray")
+```
+
+**Guidelines for df:**
+
+| df | Tail behavior | Equivalent to |
+|----|---------------|---------------|
+| 1 | Very heavy | cauchit |
+| 2--3 | Heavy | — |
+| 4--8 | Moderate | — |
+| $>30$ | Light | probit |
+
+### Other Flexible Links
+
+**Aranda-Ordaz:**
+
+- $\lambda = 1$: Equivalent to logit
+- $\lambda \to 0$: Approaches cloglog
+- Useful for testing proportional odds assumption
+
+**GEV (Generalized Extreme Value):**
+
+- $\xi = 0$: Gumbel type (equivalent to loglog)
+- $\xi > 0$: Fréchet type (heavy upper tail)
+- $\xi < 0$: Weibull type (bounded upper tail)
+
+**SP (Symmetric Power):**
+
+- $r = 1$: Base distribution (e.g., logit)
+- $r < 1$: Positively skewed
+- $r > 1$: Negatively skewed
+
+**Log-Gamma:**
+
+- $\lambda = 0$: Equivalent to probit
+- $\lambda > 0$: Heavier right tail
+- $\lambda < 0$: Heavier left tail
+
+**AEP (Asymmetric Exponential Power):**
+
+- $\theta_1, \theta_2 > 0$: Shape parameters controlling left and right tails
+- $\theta_1 = \theta_2 = 2$: Similar to probit (normal-like)
+- $\theta_1 = \theta_2 = 1$: Laplace-like (heavier tails)
+- $\theta_1 \neq \theta_2$: Asymmetric tails
+
+## Practical Comparison
+
+### Fitting Models with Different Links
+
+We compare link functions using the `wine` dataset. First, we fit models with
+the five standard links:
+
+```{r fit-standard, results='hide'}
+set.seed(42)
+
+fit_logit <- clm_stan(rating ~ temp + contact, data = wine, link = "logit",
+                      chains = 2, iter = 1000, warmup = 500, refresh = 0)
+
+fit_probit <- clm_stan(rating ~ temp + contact, data = wine, link = "probit",
+                       chains = 2, iter = 1000, warmup = 500, refresh = 0)
+
+fit_cloglog <- clm_stan(rating ~ temp + contact, data = wine, link = "cloglog",
+                        chains = 2, iter = 1000, warmup = 500, refresh = 0)
+
+fit_loglog <- clm_stan(rating ~ temp + contact, data = wine, link = "loglog",
+                       chains = 2, iter = 1000, warmup = 500, refresh = 0)
+
+fit_cauchit <- clm_stan(rating ~ temp + contact, data = wine, link = "cauchit",
+                        chains = 2, iter = 1000, warmup = 500, refresh = 0)
+```
+
+Next, we fit models with the six flexible links. These links have parameters
+that are estimated from the data:
+
+```{r fit-flexible, results='hide'}
+fit_tlink <- clm_stan(rating ~ temp + contact, data = wine, link = "tlink",
+                      link_param = list(df = "estimate"),
+                      chains = 2, iter = 1000, warmup = 500, refresh = 0)
+
+fit_aranda <- clm_stan(rating ~ temp + contact, data = wine, link = "aranda_ordaz",
+                       link_param = list(lambda = "estimate"),
+                       chains = 2, iter = 1000, warmup = 500, refresh = 0)
+
+fit_gev <- clm_stan(rating ~ temp + contact, data = wine, link = "gev",
+                    link_param = list(xi = "estimate"),
+                    chains = 2, iter = 1000, warmup = 500, refresh = 0)
+
+fit_sp <- clm_stan(rating ~ temp + contact, data = wine, link = "sp",
+                   base = "logit", link_param = list(r = "estimate"),
+                   chains = 2, iter = 1000, warmup = 500, refresh = 0)
+
+fit_loggamma <- clm_stan(rating ~ temp + contact, data = wine, link = "log_gamma",
+                         link_param = list(lambda = "estimate"),
+                         chains = 2, iter = 1000, warmup = 500, refresh = 0)
+
+fit_aep <- clm_stan(rating ~ temp + contact, data = wine, link = "aep",
+                    link_param = list(theta1 = "estimate", theta2 = "estimate"),
+                    chains = 2, iter = 1000, warmup = 500, refresh = 0)
+```
+
+### Model Comparison with LOO-CV
+
+We use leave-one-out cross-validation (LOO-CV) to compare predictive
+performance across all 11 models:
+
+```{r loo-compute, results='hide'}
+# Compute LOO for standard links
+loo_logit <- loo(fit_logit)
+loo_probit <- loo(fit_probit)
+loo_cloglog <- loo(fit_cloglog)
+loo_loglog <- loo(fit_loglog)
+loo_cauchit <- loo(fit_cauchit)
+
+# Compute LOO for flexible links
+loo_tlink <- loo(fit_tlink)
+loo_aranda <- loo(fit_aranda)
+loo_gev <- loo(fit_gev)
+loo_sp <- loo(fit_sp)
+loo_loggamma <- loo(fit_loggamma)
+loo_aep <- loo(fit_aep)
+```
+
+```{r loo-compare}
+# Compare all 11 link functions (sorted by expected log predictive density)
+loo_list <- list(
+  logit = loo_logit,
+  probit = loo_probit,
+  cloglog = loo_cloglog,
+  loglog = loo_loglog,
+  cauchit = loo_cauchit,
+  tlink = loo_tlink,
+  aranda_ordaz = loo_aranda,
+  gev = loo_gev,
+  sp = loo_sp,
+  log_gamma = loo_loggamma,
+  aep = loo_aep
+)
+loo::loo_compare(loo_list)
+```
+
+**How to interpret:**
+
+- Models are sorted by expected log predictive density (best first)
+- `elpd_diff`: Difference from the best model (0 = best)
+- `se_diff`: Standard error of the difference
+- Rule of thumb: If $|\texttt{elpd\_diff}| < 2 \times \texttt{se\_diff}$, the
+  difference is not significant
+
+**Note:** WAIC (Widely Applicable Information Criterion) is also available via
+`waic(fit)`. LOO-CV is generally preferred as it provides diagnostics for
+problematic observations (Pareto k values).
+
+### Interpreting Results
+
+**Coefficient comparison across standard links:**
+
+```{r coef-comparison}
+coefs <- data.frame(
+  logit = coef(fit_logit),
+  probit = coef(fit_probit),
+  cloglog = coef(fit_cloglog),
+  loglog = coef(fit_loglog),
+  cauchit = coef(fit_cauchit)
+)
+round(coefs, 3)
+```
+
+Note: Coefficients are on different scales depending on the link function.
+Direct comparison of magnitudes is not meaningful; compare signs and
+relative importance instead.
+
+**Estimated link parameters for flexible links:**
+
+```{r link-params}
+# Combine all flexible link parameter estimates into one table
+link_params_all <- rbind(
+  cbind(link = "tlink", summary(fit_tlink)$link_params),
+  cbind(link = "aranda_ordaz", summary(fit_aranda)$link_params),
+  cbind(link = "gev", summary(fit_gev)$link_params),
+  cbind(link = "sp", summary(fit_sp)$link_params),
+  cbind(link = "log_gamma", summary(fit_loggamma)$link_params),
+  cbind(link = "aep", summary(fit_aep)$link_params)
+)
+link_params_all
+```
+
+## Quick Reference
+
+| Link | Usage | When to use |
+|------|-------|-------------|
+| logit | `link = "logit"` | Proportional odds model |
+| probit | `link = "probit"` | Latent normal variable |
+| cloglog | `link = "cloglog"` | Right-skewed; proportional hazards |
+| loglog | `link = "loglog"` | Left-skewed; mirror of cloglog |
+| cauchit | `link = "cauchit"` | Heavy-tailed errors |
+| tlink | `link = "tlink", link_param = list(df = "estimate")` | Adjustable tail weight |
+| aranda_ordaz | `link = "aranda_ordaz", link_param = list(lambda = "estimate")` | Logit-cloglog interpolation; $\lambda = 1$ is logit |
+| gev | `link = "gev", link_param = list(xi = "estimate")` | Unconstrained skewness; $\xi = 0$ gives loglog |
+| sp | `link = "sp", base = "logit", link_param = list(r = "estimate")` | Adjustable skewness |
+| log_gamma | `link = "log_gamma", link_param = list(lambda = "estimate")` | Generalized probit; $\lambda = 0$ is probit |
+| aep | `link = "aep", link_param = list(theta1 = "estimate", theta2 = "estimate")` | Independent tail shapes |
+
+## References
+
+- Agresti, A. (2010). *Analysis of Ordinal Categorical Data* (2nd ed.). Wiley.
+- Albert, J.H., & Chib, S. (1993). Bayesian analysis of binary and polychotomous
+  response data. *Journal of the American Statistical Association*, 88(422), 669--679.
+- Aranda-Ordaz, F.J. (1981). On two families of transformations to additivity for
+  binary response data. *Biometrika*, 68(2), 357--363.
+- Jiang, X., & Dey, D.K. (2015). Symmetric power link with ordinal response
+  model. In *Current Trends in Bayesian Methodology with Applications*. CRC Press.
+- Naranjo, L., Pérez, C.J., & Martín, J. (2015). Bayesian analysis of some
+  models that use the asymmetric exponential power distribution.
+  *Statistics and Computing*, 25(3), 497--514.
+- Prentice, R.L. (1976). A generalization of the probit and logit methods for
+  dose response curves. *Biometrics*, 32(4), 761--768.
+- Wang, X., & Dey, D.K. (2011). Generalized extreme value regression for
+  ordinal response data. *Environmental and Ecological Statistics*, 18(4), 619--634.

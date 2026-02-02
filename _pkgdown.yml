@@ -1,0 +1,88 @@
+# pkgdown configuration for clmstan
+# URL will be set after GitHub repository creation:
+# url: https://USERNAME.github.io/clmstan/
+
+template:
+  bootstrap: 5
+
+navbar:
+  structure:
+    left: [intro, reference, articles]
+    right: [search, github]
+
+reference:
+  - title: "Model Fitting"
+    desc: Main function for fitting cumulative link models
+    contents:
+      - clm_stan
+      - clmstan-class
+
+  - title: "Prior Specification"
+    desc: Functions for specifying prior distributions
+    contents:
+      - prior
+      - clm_prior
+      - normal
+      - gamma
+      - student_t
+      - cauchy
+      - flat
+      - c.clm_prior_spec
+
+  - title: "Model Information"
+    desc: Query available options
+    contents:
+      - supported_links
+      - supported_thresholds
+      - link_functions
+
+  - title: "S3 Methods"
+    desc: Methods for clmstan objects
+    contents:
+      - coef.clmstan
+      - summary.clmstan
+      - print.clmstan
+      - print.summary.clmstan
+      - plot.clmstan
+
+  - title: "Prediction"
+    desc: Prediction functions
+    contents:
+      - predict.clmstan
+      - fitted.clmstan
+      - posterior_predict.clmstan
+
+  - title: "Model Comparison"
+    desc: Leave-one-out cross-validation and WAIC
+    contents:
+      - loo.clmstan
+      - waic.clmstan
+
+  - title: "Diagnostics"
+    desc: MCMC convergence diagnostics
+    contents:
+      - diagnostics
+      - extract_acf
+
+  - title: "Utilities"
+    desc: Utility functions
+    contents:
+      - is.clmstan
+
+  - title: "Print Methods"
+    desc: Print methods for prior objects
+    contents:
+      - print.clm_dist
+      - print.clm_prior
+      - print.clm_prior_list
+      - print.clm_prior_spec
+
+articles:
+  - title: "Getting Started"
+    navbar: ~
+    contents:
+      - getting-started
+
+  - title: "Advanced Topics"
+    contents:
+      - articles/link-functions
