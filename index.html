@@ -64,6 +64,11 @@
 <p>Models are pre-compiled using the <code>instantiate</code> package for fast execution without runtime compilation.</p>
 </div>
 <div class="section level2">
+<h2 id="documentation">Documentation<a class="anchor" aria-label="anchor" href="#documentation"></a>
+</h2>
+<p>Full documentation is available at: <strong><a href="https://t-momozaki.github.io/clmstan/" class="uri">https://t-momozaki.github.io/clmstan/</a></strong></p>
+</div>
+<div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <div class="section level3">
@@ -172,6 +177,11 @@
 <h3 id="flexible-links-with-parameters-6">Flexible Links with Parameters (6)<a class="anchor" aria-label="anchor" href="#flexible-links-with-parameters-6"></a>
 </h3>
 <table class="table">
+<colgroup>
+<col width="20%">
+<col width="36%">
+<col width="43%">
+</colgroup>
 <thead><tr class="header">
 <th>Link</th>
 <th>Parameter</th>
@@ -180,32 +190,34 @@
 <tbody>
 <tr class="odd">
 <td>tlink</td>
-<td>df &gt; 0</td>
-<td>t-distribution, adjustable tail weight</td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ν</mi><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\nu &gt; 0</annotation></semantics></math></td>
+<td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>-distribution, adjustable tail weight</td>
 </tr>
 <tr class="even">
 <td>aranda_ordaz</td>
-<td>lambda &gt; 0</td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>λ</mi><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\lambda &gt; 0</annotation></semantics></math></td>
 <td>Generalized asymmetric link</td>
 </tr>
 <tr class="odd">
 <td>sp</td>
-<td>r &gt; 0, base</td>
+<td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">r &gt; 0</annotation></semantics></math>, base</td>
 <td>Symmetric Power, adjustable skewness</td>
 </tr>
 <tr class="even">
 <td>log_gamma</td>
-<td>lambda</td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>λ</mi><mo>∈</mo><mi>ℝ</mi></mrow><annotation encoding="application/x-tex">\lambda \in \mathbb{R}</annotation></semantics></math></td>
 <td>Continuous symmetric/asymmetric adjustment</td>
 </tr>
 <tr class="odd">
 <td>gev</td>
-<td>xi</td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ξ</mi><mo>∈</mo><mi>ℝ</mi></mrow><annotation encoding="application/x-tex">\xi \in \mathbb{R}</annotation></semantics></math></td>
 <td>Generalized Extreme Value</td>
 </tr>
 <tr class="even">
 <td>aep</td>
-<td>theta1, theta2</td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>θ</mi><mn>1</mn></msub><mo>,</mo><msub><mi>θ</mi><mn>2</mn></msub><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\theta_1, \theta_2 &gt; 0</annotation></semantics></math></td>
 <td>Asymmetric Exponential Power</td>
 </tr>
 </tbody>
@@ -265,16 +277,16 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td>Regression coefficients (β)</td>
-<td>normal(0, 2.5)</td>
+<td>Regression coefficients (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>β</mi><annotation encoding="application/x-tex">\beta</annotation></semantics></math>)</td>
+<td><code>normal(0, 2.5)</code></td>
 </tr>
 <tr class="even">
-<td>Thresholds (c)</td>
-<td>normal(0, 10)</td>
+<td>Thresholds (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>c</mi><annotation encoding="application/x-tex">c</annotation></semantics></math>)</td>
+<td><code>normal(0, 10)</code></td>
 </tr>
 <tr class="odd">
-<td>Equidistant spacing (d)</td>
-<td>gamma(2, 0.5)</td>
+<td>Equidistant spacing (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>d</mi><annotation encoding="application/x-tex">d</annotation></semantics></math>)</td>
+<td><code>gamma(2, 0.5)</code></td>
 </tr>
 </tbody>
 </table>
@@ -288,33 +300,33 @@
 <tbody>
 <tr class="odd">
 <td>tlink</td>
-<td>df</td>
-<td>gamma(2, 0.1)</td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ν</mi><annotation encoding="application/x-tex">\nu</annotation></semantics></math></td>
+<td><code>gamma(2, 0.1)</code></td>
 </tr>
 <tr class="even">
 <td>aranda_ordaz</td>
-<td>lambda</td>
-<td>gamma(0.5, 0.5)</td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math></td>
+<td><code>gamma(0.5, 0.5)</code></td>
 </tr>
 <tr class="odd">
 <td>sp</td>
-<td>r</td>
-<td>gamma(0.5, 0.5)</td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math></td>
+<td><code>gamma(0.5, 0.5)</code></td>
 </tr>
 <tr class="even">
 <td>log_gamma</td>
-<td>lambda</td>
-<td>normal(0, 1)</td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math></td>
+<td><code>normal(0, 1)</code></td>
 </tr>
 <tr class="odd">
 <td>gev</td>
-<td>xi</td>
-<td>normal(0, 2)</td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ξ</mi><annotation encoding="application/x-tex">\xi</annotation></semantics></math></td>
+<td><code>normal(0, 2)</code></td>
 </tr>
 <tr class="even">
 <td>aep</td>
-<td>theta1, theta2</td>
-<td>gamma(2, 1)</td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>θ</mi><mn>1</mn></msub><mo>,</mo><msub><mi>θ</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\theta_1, \theta_2</annotation></semantics></math></td>
+<td><code>gamma(2, 1)</code></td>
 </tr>
 </tbody>
 </table>
@@ -367,22 +379,26 @@
 <tbody>
 <tr class="odd">
 <td><code>normal(mu, sigma)</code></td>
-<td>mean, SD</td>
+<td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>μ</mi><annotation encoding="application/x-tex">\mu</annotation></semantics></math>: mean, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>σ</mi><annotation encoding="application/x-tex">\sigma</annotation></semantics></math>: SD</td>
 <td><code>normal(0, 2.5)</code></td>
 </tr>
 <tr class="even">
 <td><code>gamma(alpha, beta)</code></td>
-<td>shape, rate</td>
+<td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>: shape, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>β</mi><annotation encoding="application/x-tex">\beta</annotation></semantics></math>: rate</td>
 <td><code>gamma(2, 0.1)</code></td>
 </tr>
 <tr class="odd">
 <td><code>student_t(df, mu, sigma)</code></td>
-<td>df, location, scale</td>
+<td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ν</mi><annotation encoding="application/x-tex">\nu</annotation></semantics></math>: df, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>μ</mi><annotation encoding="application/x-tex">\mu</annotation></semantics></math>: location, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>σ</mi><annotation encoding="application/x-tex">\sigma</annotation></semantics></math>: scale</td>
 <td><code>student_t(3, 0, 2.5)</code></td>
 </tr>
 <tr class="even">
 <td><code>cauchy(mu, sigma)</code></td>
-<td>location, scale</td>
+<td>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>μ</mi><annotation encoding="application/x-tex">\mu</annotation></semantics></math>: location, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>σ</mi><annotation encoding="application/x-tex">\sigma</annotation></semantics></math>: scale</td>
 <td><code>cauchy(0, 2.5)</code></td>
 </tr>
 <tr class="odd">
@@ -411,17 +427,17 @@
 <tbody>
 <tr class="odd">
 <td><code>b</code></td>
-<td>Regression coefficients</td>
+<td>Regression coefficients (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>β</mi><annotation encoding="application/x-tex">\beta</annotation></semantics></math>)</td>
 <td>normal, student_t, cauchy, flat</td>
 </tr>
 <tr class="even">
 <td><code>Intercept</code></td>
-<td>Thresholds (flexible)</td>
+<td>Thresholds (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>c</mi><annotation encoding="application/x-tex">c</annotation></semantics></math>, flexible)</td>
 <td>normal, student_t, cauchy, flat</td>
 </tr>
 <tr class="odd">
 <td><code>c1</code></td>
-<td>First threshold (equidistant)</td>
+<td>First threshold (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>c</mi><mn>1</mn></msub><annotation encoding="application/x-tex">c_1</annotation></semantics></math>, equidistant)</td>
 <td>normal, student_t, cauchy, flat</td>
 </tr>
 <tr class="even">
@@ -431,39 +447,43 @@
 </tr>
 <tr class="odd">
 <td><code>d</code></td>
-<td>Equidistant spacing</td>
+<td>Equidistant spacing (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>d</mi><annotation encoding="application/x-tex">d</annotation></semantics></math>)</td>
 <td>gamma</td>
 </tr>
 <tr class="even">
 <td><code>df</code></td>
-<td>t-link degrees of freedom</td>
+<td>t-link degrees of freedom (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ν</mi><annotation encoding="application/x-tex">\nu</annotation></semantics></math>)</td>
 <td>gamma</td>
 </tr>
 <tr class="odd">
 <td><code>lambda_ao</code></td>
-<td>Aranda-Ordaz lambda</td>
+<td>Aranda-Ordaz <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math>
+</td>
 <td>gamma</td>
 </tr>
 <tr class="even">
 <td><code>r</code></td>
-<td>Symmetric Power r</td>
+<td>Symmetric Power <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math>
+</td>
 <td>gamma</td>
 </tr>
 <tr class="odd">
 <td><code>lambda_lg</code></td>
-<td>Log-gamma lambda</td>
+<td>Log-gamma <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math>
+</td>
 <td>normal, student_t, cauchy</td>
 </tr>
 <tr class="even">
 <td><code>xi</code></td>
-<td>GEV xi</td>
+<td>GEV <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ξ</mi><annotation encoding="application/x-tex">\xi</annotation></semantics></math>
+</td>
 <td>normal, student_t, cauchy</td>
 </tr>
 <tr class="odd">
 <td>
 <code>theta1</code>, <code>theta2</code>
 </td>
-<td>AEP shape parameters</td>
+<td>AEP shape (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>θ</mi><mn>1</mn></msub><mo>,</mo><msub><mi>θ</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\theta_1, \theta_2</annotation></semantics></math>)</td>
 <td>gamma</td>
 </tr>
 </tbody>
