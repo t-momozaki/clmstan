@@ -9,3 +9,7 @@ inst/stan/**/*.exe
 inst/stan/**/*.EXE
 *.dll
 docs/
+
+# Internal development documentation (keep locally, exclude from GitHub)
+INSTANTIATE_ISSUE.md
+STAN_DEVELOPMENT_GUIDE.md
