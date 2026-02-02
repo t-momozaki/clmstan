@@ -1,0 +1,322 @@
+# clmstan
+
+Cumulative Link Models with CmdStanR
+
+## Overview
+
+`clmstan` fits cumulative link models (CLMs) for ordinal categorical
+data using CmdStanR. It supports 11 link functions including standard
+links (logit, probit, cloglog) and flexible parametric links (GEV, AEP,
+Symmetric Power).
+
+Models are pre-compiled using the `instantiate` package for fast
+execution without runtime compilation.
+
+## Installation
+
+### Prerequisites
+
+This package requires:
+
+1.  **CmdStan** - Stan’s command-line interface
+2.  **cmdstanr** - R interface to CmdStan (not on CRAN)
+
+### Step 1: Install cmdstanr
+
+``` r
+# Install cmdstanr from r-universe (recommended)
+install.packages("cmdstanr",
+                 repos = c("https://stan-dev.r-universe.dev",
+                           getOption("repos")))
+```
+
+### Step 2: Install CmdStan
+
+``` r
+library(cmdstanr)
+install_cmdstan()  # Only needed once
+```
+
+### Step 3: Install clmstan
+
+``` r
+# From CRAN (when available)
+install.packages("clmstan")
+
+# From GitHub (development version)
+# install.packages("devtools")
+devtools::install_github("t-momozaki/clmstan")
+```
+
+**Note**: During package installation, Stan models are compiled
+automatically. This may take a few minutes on first install.
+
+## Quick Start
+
+``` r
+library(clmstan)
+
+# Example data
+set.seed(123)
+n <- 100
+x <- rnorm(n)
+latent <- 1.0 * x + rlogis(n)
+y <- cut(latent, breaks = c(-Inf, -1, 0, 1, Inf), labels = 1:4)
+data <- data.frame(y = y, x = x)
+
+# Fit a cumulative link model with logit link
+fit <- clm_stan(y ~ x, data = data, link = "logit",
+                chains = 4, iter = 2000, warmup = 1000)
+
+# View results
+fit$fit$summary(variables = c("beta", "c_transformed", "beta0"))
+```
+
+## Supported Link Functions
+
+### Standard Links (5)
+
+| Link    | Distribution | Use Case                                  |
+|---------|--------------|-------------------------------------------|
+| logit   | Logistic     | Default, proportional odds                |
+| probit  | Normal       | Symmetric, latent variable interpretation |
+| cloglog | Gumbel (max) | Asymmetric, proportional hazards          |
+| loglog  | Gumbel (min) | Asymmetric                                |
+| cauchit | Cauchy       | Heavy tails                               |
+
+### Flexible Links with Parameters (6)
+
+| Link         | Parameter      | Description                                |
+|--------------|----------------|--------------------------------------------|
+| tlink        | df \> 0        | t-distribution, adjustable tail weight     |
+| aranda_ordaz | lambda \> 0    | Generalized asymmetric link                |
+| sp           | r \> 0, base   | Symmetric Power, adjustable skewness       |
+| log_gamma    | lambda         | Continuous symmetric/asymmetric adjustment |
+| gev          | xi             | Generalized Extreme Value                  |
+| aep          | theta1, theta2 | Asymmetric Exponential Power               |
+
+### Using Flexible Links
+
+``` r
+# Fixed parameter
+fit_t <- clm_stan(y ~ x, data = data, link = "tlink",
+                  link_param = list(df = 8))
+
+# Estimate parameter with Bayesian inference
+fit_gev <- clm_stan(y ~ x, data = data, link = "gev",
+                    link_param = list(xi = "estimate"))
+```
+
+## Threshold Structures
+
+| Structure   | Description                      |
+|-------------|----------------------------------|
+| flexible    | Free thresholds (default)        |
+| equidistant | Equal spacing between thresholds |
+| symmetric   | Symmetric around center          |
+
+``` r
+# Equidistant thresholds
+fit_equi <- clm_stan(y ~ x, data = data, threshold = "equidistant")
+```
+
+## Prior Specification
+
+### Default Priors
+
+clmstan uses weakly informative default priors:
+
+| Parameter                   | Default Prior  |
+|-----------------------------|----------------|
+| Regression coefficients (β) | normal(0, 2.5) |
+| Thresholds (c)              | normal(0, 10)  |
+| Equidistant spacing (d)     | gamma(2, 0.5)  |
+
+For link parameters estimated via Bayesian inference:
+
+| Link         | Parameter      | Default Prior   |
+|--------------|----------------|-----------------|
+| tlink        | df             | gamma(2, 0.1)   |
+| aranda_ordaz | lambda         | gamma(0.5, 0.5) |
+| sp           | r              | gamma(0.5, 0.5) |
+| log_gamma    | lambda         | normal(0, 1)    |
+| gev          | xi             | normal(0, 2)    |
+| aep          | theta1, theta2 | gamma(2, 1)     |
+
+### Custom Priors
+
+Use the [`prior()`](reference/prior.md) function with distribution
+helpers:
+
+``` r
+# Tighter prior on regression coefficients
+fit <- clm_stan(y ~ x, data = data,
+                prior = prior(normal(0, 1), class = "b"))
+
+# Multiple priors
+fit <- clm_stan(y ~ x, data = data,
+                prior = c(
+                  prior(normal(0, 1), class = "b"),
+                  prior(normal(0, 5), class = "Intercept")
+                ))
+```
+
+### Prior for Link Parameters
+
+When estimating link parameters, you can specify custom priors:
+
+``` r
+# Custom prior for t-link df parameter
+fit <- clm_stan(y ~ x, data = data, link = "tlink",
+                link_param = list(df = "estimate"),
+                prior = prior(gamma(3, 0.2), class = "df"))
+
+# Custom prior for GEV xi parameter
+fit <- clm_stan(y ~ x, data = data, link = "gev",
+                link_param = list(xi = "estimate"),
+                prior = prior(normal(0, 0.5), class = "xi"))
+```
+
+### Available Distribution Functions
+
+| Function                      | Parameters          | Example                       |
+|-------------------------------|---------------------|-------------------------------|
+| `normal(mu, sigma)`           | mean, SD            | `normal(0, 2.5)`              |
+| `gamma(alpha, beta)`          | shape, rate         | `gamma(2, 0.1)`               |
+| `student_t(df, mu, sigma)`    | df, location, scale | `student_t(3, 0, 2.5)`        |
+| `cauchy(mu, sigma)`           | location, scale     | `cauchy(0, 2.5)`              |
+| [`flat()`](reference/flat.md) | none                | [`flat()`](reference/flat.md) |
+
+**Note:** [`flat()`](reference/flat.md) creates an improper uniform
+prior. Use with caution as it may lead to improper posteriors if the
+data does not provide sufficient information. For thresholds with
+ordered constraints, Stan’s internal transformation provides implicit
+regularization.
+
+### Prior Classes
+
+| Class              | Description                     | Compatible Distributions        |
+|--------------------|---------------------------------|---------------------------------|
+| `b`                | Regression coefficients         | normal, student_t, cauchy, flat |
+| `Intercept`        | Thresholds (flexible)           | normal, student_t, cauchy, flat |
+| `c1`               | First threshold (equidistant)   | normal, student_t, cauchy, flat |
+| `cpos`             | Positive thresholds (symmetric) | normal, student_t, cauchy, flat |
+| `d`                | Equidistant spacing             | gamma                           |
+| `df`               | t-link degrees of freedom       | gamma                           |
+| `lambda_ao`        | Aranda-Ordaz lambda             | gamma                           |
+| `r`                | Symmetric Power r               | gamma                           |
+| `lambda_lg`        | Log-gamma lambda                | normal, student_t, cauchy       |
+| `xi`               | GEV xi                          | normal, student_t, cauchy       |
+| `theta1`, `theta2` | AEP shape parameters            | gamma                           |
+
+## License
+
+MIT
+
+# Package index
+
+## Model Fitting
+
+Main function for fitting cumulative link models
+
+- [`clm_stan()`](clm_stan.md) : Fit a Cumulative Link Model using
+  CmdStanR
+- [`clmstan-class`](clmstan-class.md) : clmstan S3 Class
+
+## Prior Specification
+
+Functions for specifying prior distributions
+
+- [`prior()`](prior.md) : Specify Prior Distributions
+- [`clm_prior()`](clm_prior.md) : Prior Specification for clmstan
+- [`normal()`](normal.md) : Normal Distribution for Prior Specification
+- [`gamma()`](gamma.md) : Gamma Distribution for Prior Specification
+- [`student_t()`](student_t.md) : Student-t Distribution for Prior
+  Specification
+- [`cauchy()`](cauchy.md) : Cauchy Distribution for Prior Specification
+- [`flat()`](flat.md) : Flat (Improper Uniform) Prior Distribution
+- [`c(`*`<clm_prior_spec>`*`)`](c.clm_prior_spec.md) : Combine Multiple
+  Prior Specifications
+
+## Model Information
+
+Query available options
+
+- [`supported_links()`](supported_links.md) : Get supported link
+  functions
+- [`supported_thresholds()`](supported_thresholds.md) : Get supported
+  threshold structures
+- [`link_functions`](link_functions.md) : Available Link Functions
+
+## S3 Methods
+
+Methods for clmstan objects
+
+- [`coef(`*`<clmstan>`*`)`](coef.clmstan.md) : Extract coefficients from
+  clmstan objects
+- [`summary(`*`<clmstan>`*`)`](summary.clmstan.md) : Summary method for
+  clmstan objects
+- [`print(`*`<clmstan>`*`)`](print.clmstan.md) : Print method for
+  clmstan objects
+- [`print(`*`<summary.clmstan>`*`)`](print.summary.clmstan.md) : Print
+  method for summary.clmstan objects
+- [`plot(`*`<clmstan>`*`)`](plot.clmstan.md) : Plot method for clmstan
+  objects
+
+## Prediction
+
+Prediction functions
+
+- [`predict(`*`<clmstan>`*`)`](predict.clmstan.md) : Predict method for
+  clmstan objects
+- [`fitted(`*`<clmstan>`*`)`](fitted.clmstan.md) : Fitted values for
+  clmstan objects
+- [`posterior_predict.clmstan()`](posterior_predict.clmstan.md) :
+  Posterior predictive distribution for clmstan objects
+
+## Model Comparison
+
+Leave-one-out cross-validation and WAIC
+
+- [`loo(`*`<clmstan>`*`)`](loo.clmstan.md) : Leave-One-Out
+  Cross-Validation for clmstan objects
+- [`waic(`*`<clmstan>`*`)`](waic.clmstan.md) : Widely Applicable
+  Information Criterion for clmstan objects
+
+## Diagnostics
+
+MCMC convergence diagnostics
+
+- [`diagnostics()`](diagnostics.md) : MCMC Diagnostics for clmstan
+  objects
+- [`extract_acf()`](extract_acf.md) : Extract ACF values from clmstan
+  object
+
+## Utilities
+
+Utility functions
+
+- [`is.clmstan()`](is.clmstan.md) : Check if object is clmstan
+
+## Print Methods
+
+Print methods for prior objects
+
+- [`print(`*`<clm_dist>`*`)`](print.clm_dist.md) : Print method for
+  clm_dist objects
+- [`print(`*`<clm_prior>`*`)`](print.clm_prior.md) : Print method for
+  clm_prior objects
+- [`print(`*`<clm_prior_list>`*`)`](print.clm_prior_list.md) : Print
+  method for clm_prior_list objects
+- [`print(`*`<clm_prior_spec>`*`)`](print.clm_prior_spec.md) : Print
+  method for clm_prior_spec objects
+
+# Articles
+
+### Getting Started
+
+- [Getting Started with clmstan](getting-started.md):
+
+### Advanced Topics
+
+- [Link Functions in clmstan](link-functions.md):
