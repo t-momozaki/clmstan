@@ -21,7 +21,7 @@
 #'   }
 #' @param chains Number of MCMC chains (default: 4)
 #' @param iter Total iterations per chain (default: 2000)
-#' @param warmup Warmup iterations per chain (default: 1000)
+#' @param warmup Warmup iterations per chain. If NULL (default), uses floor(iter/2)
 #' @param ... Additional arguments passed to cmdstanr::sample()
 #'
 #' @return An object of class "clmstan"
@@ -52,8 +52,24 @@ clm_stan <- function(formula,
                      prior = NULL,
                      chains = 4,
                      iter = 2000,
-                     warmup = 1000,
+                     warmup = NULL,
                      ...) {
+  # ===========================================================================
+  # Step 0: Set warmup default if NULL
+  # ===========================================================================
+
+  if (is.null(warmup)) {
+    warmup <- floor(iter / 2)
+  }
+
+  # Validate iter > warmup
+  if (iter <= warmup) {
+    stop(sprintf(
+      "`iter` (%d) must be greater than `warmup` (%d).\n  Consider using the default warmup (floor(iter/2)) or increasing iter.",
+      iter, warmup
+    ))
+  }
+
   # ===========================================================================
   # Step 1: Input validation
   # ===========================================================================

@@ -10,3 +10,6 @@
 ^_pkgdown\.yml$
 ^docs$
 ^vignettes/articles$
+^INSTANTIATE_ISSUE\.md$
+^STAN_DEVELOPMENT_GUIDE\.md$
+^validation$

@@ -21,6 +21,7 @@ An object of class "summary.clmstan" containing:
 \item coefficients: Posterior summary for regression coefficients
 \item thresholds: Posterior summary for threshold parameters
 \item beta0: Posterior summary for intercept
+\item link_params: Posterior summary for link parameters (full model only)
 \item model_info: Model metadata (formula, link, threshold, K, N, P)
 }
 }

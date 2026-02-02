@@ -564,7 +564,7 @@ fit <- clm_stan(rating ~ temp, data = wine,
 
 ### Related Packages
 - [ordinal](https://cran.r-project.org/package=ordinal): Frequentist CLMs
-- [brms](https://paul-buerkner.github.io/brms/): Bayesian regression (rstan-based)
+- [brms](https://paulbuerkner.com/brms/): Bayesian regression (rstan-based)
 
 ### Statistical References
 - Agresti, A. (2010). *Analysis of Ordinal Categorical Data* (2nd ed.)

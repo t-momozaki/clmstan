@@ -14,7 +14,7 @@ clm_stan(
   prior = NULL,
   chains = 4,
   iter = 2000,
-  warmup = 1000,
+  warmup = NULL,
   ...
 )
 }
@@ -49,7 +49,7 @@ clm_stan(
 
 \item{iter}{Total iterations per chain (default: 2000)}
 
-\item{warmup}{Warmup iterations per chain (default: 1000)}
+\item{warmup}{Warmup iterations per chain. If NULL (default), uses floor(iter/2)}
 
 \item{...}{Additional arguments passed to cmdstanr::sample()}
 }

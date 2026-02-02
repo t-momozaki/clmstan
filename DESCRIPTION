@@ -30,13 +30,10 @@ Suggests:
     rmarkdown,
     ordinal,
     cmdstanr (>= 0.9.0)
-Remotes:
-    stan-dev/cmdstanr
 Additional_repositories:
     https://stan-dev.r-universe.dev
 SystemRequirements: CmdStan (https://mc-stan.org/users/interfaces/cmdstan)
 Encoding: UTF-8
-LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
 Config/testthat/edition: 3

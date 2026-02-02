@@ -73,20 +73,18 @@ PRIOR_TYPES <- list(
 #' my_prior <- clm_prior(beta_sd = 2, c_sd = 5)
 #' print(my_prior)
 #'
-#' \donttest{
+#' \dontrun{
 #' # Examples below require CmdStan and compiled Stan models
-#' if (instantiate::stan_cmdstan_exists()) {
-#'   data(wine, package = "ordinal")
+#' data(wine, package = "ordinal")
 #'
-#'   # Default priors (no customization needed)
-#'   fit <- clm_stan(rating ~ temp, data = wine,
-#'                   chains = 2, iter = 500, refresh = 0)
+#' # Default priors (no customization needed)
+#' fit <- clm_stan(rating ~ temp, data = wine,
+#'                 chains = 2, iter = 500, warmup = 250, refresh = 0)
 #'
-#'   # Custom prior for regression coefficients
-#'   fit2 <- clm_stan(rating ~ temp, data = wine,
-#'                    prior = clm_prior(beta_sd = 1),
-#'                    chains = 2, iter = 500, refresh = 0)
-#' }
+#' # Custom prior for regression coefficients
+#' fit2 <- clm_stan(rating ~ temp, data = wine,
+#'                  prior = clm_prior(beta_sd = 1),
+#'                  chains = 2, iter = 500, warmup = 250, refresh = 0)
 #' }
 clm_prior <- function(
     # Basic priors
