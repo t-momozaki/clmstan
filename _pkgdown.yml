@@ -1,6 +1,5 @@
 # pkgdown configuration for clmstan
-# URL will be set after GitHub repository creation:
-# url: https://USERNAME.github.io/clmstan/
+url: https://t-momozaki.github.io/clmstan/
 
 template:
   bootstrap: 5

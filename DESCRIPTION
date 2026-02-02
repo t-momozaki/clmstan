@@ -13,6 +13,9 @@ Description: Fits cumulative link models (CLMs) for ordinal categorical data
     and Symmetric Power. Models are pre-compiled using the instantiate package
     for fast execution without runtime compilation.
 License: MIT + file LICENSE
+URL: https://t-momozaki.github.io/clmstan/,
+    https://github.com/t-momozaki/clmstan
+BugReports: https://github.com/t-momozaki/clmstan/issues
 Depends:
     R (>= 4.0.0)
 Imports:
