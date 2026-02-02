@@ -145,8 +145,9 @@ For link parameters estimated via Bayesian inference:
 
 ### Custom Priors
 
-Use the [`prior()`](reference/prior.md) function with distribution
-helpers:
+Use the
+[`prior()`](https://t-momozaki.github.io/clmstan/reference/prior.md)
+function with distribution helpers:
 
 ``` r
 # Tighter prior on regression coefficients
@@ -179,19 +180,20 @@ fit <- clm_stan(y ~ x, data = data, link = "gev",
 
 ### Available Distribution Functions
 
-| Function                      | Parameters          | Example                       |
-|-------------------------------|---------------------|-------------------------------|
-| `normal(mu, sigma)`           | mean, SD            | `normal(0, 2.5)`              |
-| `gamma(alpha, beta)`          | shape, rate         | `gamma(2, 0.1)`               |
-| `student_t(df, mu, sigma)`    | df, location, scale | `student_t(3, 0, 2.5)`        |
-| `cauchy(mu, sigma)`           | location, scale     | `cauchy(0, 2.5)`              |
-| [`flat()`](reference/flat.md) | none                | [`flat()`](reference/flat.md) |
+| Function                                                           | Parameters          | Example                                                            |
+|--------------------------------------------------------------------|---------------------|--------------------------------------------------------------------|
+| `normal(mu, sigma)`                                                | mean, SD            | `normal(0, 2.5)`                                                   |
+| `gamma(alpha, beta)`                                               | shape, rate         | `gamma(2, 0.1)`                                                    |
+| `student_t(df, mu, sigma)`                                         | df, location, scale | `student_t(3, 0, 2.5)`                                             |
+| `cauchy(mu, sigma)`                                                | location, scale     | `cauchy(0, 2.5)`                                                   |
+| [`flat()`](https://t-momozaki.github.io/clmstan/reference/flat.md) | none                | [`flat()`](https://t-momozaki.github.io/clmstan/reference/flat.md) |
 
-**Note:** [`flat()`](reference/flat.md) creates an improper uniform
-prior. Use with caution as it may lead to improper posteriors if the
-data does not provide sufficient information. For thresholds with
-ordered constraints, Stan’s internal transformation provides implicit
-regularization.
+**Note:**
+[`flat()`](https://t-momozaki.github.io/clmstan/reference/flat.md)
+creates an improper uniform prior. Use with caution as it may lead to
+improper posteriors if the data does not provide sufficient information.
+For thresholds with ordered constraints, Stan’s internal transformation
+provides implicit regularization.
 
 ### Prior Classes
 

@@ -98,7 +98,8 @@ coef(fit_bayes)
     predictive checks)
 2.  **Reproducibility**: Set
     [`set.seed()`](https://rdrr.io/r/base/Random.html) before
-    [`clm_stan()`](../reference/clm_stan.md) for reproducible results
+    [`clm_stan()`](https://t-momozaki.github.io/clmstan/reference/clm_stan.md)
+    for reproducible results
 3.  **Computation time**: MCMC sampling is slower than MLE, but provides
     richer inference
 
@@ -247,8 +248,8 @@ them.
 
 ### Using prior() Function (Recommended)
 
-The [`prior()`](../reference/prior.md) function provides a brms-like
-interface:
+The [`prior()`](https://t-momozaki.github.io/clmstan/reference/prior.md)
+function provides a brms-like interface:
 
 ``` r
 # Single prior

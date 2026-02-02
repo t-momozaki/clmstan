@@ -1,7 +1,7 @@
 # Student-t Distribution for Prior Specification
 
 Creates a Student-t distribution object for use with
-[`prior()`](prior.md).
+[`prior()`](https://t-momozaki.github.io/clmstan/reference/prior.md).
 
 ## Usage
 
@@ -29,8 +29,10 @@ An object of class `"clm_dist"` representing a Student-t distribution.
 
 ## See also
 
-[`prior()`](prior.md), [`normal()`](normal.md), [`gamma()`](gamma.md),
-[`cauchy()`](cauchy.md)
+[`prior()`](https://t-momozaki.github.io/clmstan/reference/prior.md),
+[`normal()`](https://t-momozaki.github.io/clmstan/reference/normal.md),
+[`gamma()`](https://t-momozaki.github.io/clmstan/reference/gamma.md),
+[`cauchy()`](https://t-momozaki.github.io/clmstan/reference/cauchy.md)
 
 ## Examples
 

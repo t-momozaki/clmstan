@@ -10,25 +10,31 @@ without runtime compilation.
 
 ## Main functions
 
-- [`clm_stan()`](clm_stan.md) - Fit a cumulative link model
+- [`clm_stan()`](https://t-momozaki.github.io/clmstan/reference/clm_stan.md) -
+  Fit a cumulative link model
 
-- [`supported_links()`](supported_links.md) - List available link
-  functions
+- [`supported_links()`](https://t-momozaki.github.io/clmstan/reference/supported_links.md) -
+  List available link functions
 
 ## Methods
 
-- [`print.clmstan()`](print.clmstan.md) - Print summary
+- [`print.clmstan()`](https://t-momozaki.github.io/clmstan/reference/print.clmstan.md) -
+  Print summary
 
-- [`summary.clmstan()`](summary.clmstan.md) - Detailed summary
+- [`summary.clmstan()`](https://t-momozaki.github.io/clmstan/reference/summary.clmstan.md) -
+  Detailed summary
 
-- [`coef.clmstan()`](coef.clmstan.md) - Extract coefficients
+- [`coef.clmstan()`](https://t-momozaki.github.io/clmstan/reference/coef.clmstan.md) -
+  Extract coefficients
 
-- [`predict.clmstan()`](predict.clmstan.md) - Predict categories or
-  probabilities
+- [`predict.clmstan()`](https://t-momozaki.github.io/clmstan/reference/predict.clmstan.md) -
+  Predict categories or probabilities
 
-- [`plot.clmstan()`](plot.clmstan.md) - Diagnostic plots
+- [`plot.clmstan()`](https://t-momozaki.github.io/clmstan/reference/plot.clmstan.md) -
+  Diagnostic plots
 
-- [`loo.clmstan()`](loo.clmstan.md) - Leave-one-out cross-validation
+- [`loo.clmstan()`](https://t-momozaki.github.io/clmstan/reference/loo.clmstan.md) -
+  Leave-one-out cross-validation
 
 ## References
 

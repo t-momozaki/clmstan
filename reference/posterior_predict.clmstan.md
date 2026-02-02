@@ -14,7 +14,8 @@ posterior_predict.clmstan(object, newdata = NULL, ndraws = NULL, ...)
 
 - object:
 
-  A `clmstan` object returned by [`clm_stan()`](clm_stan.md).
+  A `clmstan` object returned by
+  [`clm_stan()`](https://t-momozaki.github.io/clmstan/reference/clm_stan.md).
 
 - newdata:
 
@@ -38,5 +39,5 @@ observations.
 
 ## See also
 
-[`predict.clmstan()`](predict.clmstan.md),
-[`fitted.clmstan()`](fitted.clmstan.md)
+[`predict.clmstan()`](https://t-momozaki.github.io/clmstan/reference/predict.clmstan.md),
+[`fitted.clmstan()`](https://t-momozaki.github.io/clmstan/reference/fitted.clmstan.md)

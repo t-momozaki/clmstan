@@ -59,12 +59,16 @@ clm_stan(
 
   Prior specification. Can be either:
 
-  - A `clm_prior` object created by [`clm_prior()`](clm_prior.md)
+  - A `clm_prior` object created by
+    [`clm_prior()`](https://t-momozaki.github.io/clmstan/reference/clm_prior.md)
 
-  - A distribution-based prior using [`prior()`](prior.md) with
-    distribution functions ([`normal()`](normal.md),
-    [`gamma()`](gamma.md), [`student_t()`](student_t.md),
-    [`cauchy()`](cauchy.md))
+  - A distribution-based prior using
+    [`prior()`](https://t-momozaki.github.io/clmstan/reference/prior.md)
+    with distribution functions
+    ([`normal()`](https://t-momozaki.github.io/clmstan/reference/normal.md),
+    [`gamma()`](https://t-momozaki.github.io/clmstan/reference/gamma.md),
+    [`student_t()`](https://t-momozaki.github.io/clmstan/reference/student_t.md),
+    [`cauchy()`](https://t-momozaki.github.io/clmstan/reference/cauchy.md))
 
 - chains:
 

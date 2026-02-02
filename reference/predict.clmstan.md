@@ -22,7 +22,8 @@ predict(
 
 - object:
 
-  A `clmstan` object returned by [`clm_stan()`](clm_stan.md).
+  A `clmstan` object returned by
+  [`clm_stan()`](https://t-momozaki.github.io/clmstan/reference/clm_stan.md).
 
 - newdata:
 
@@ -81,6 +82,7 @@ Depending on `type` and `summary`:
 
 ## See also
 
-[`fitted.clmstan()`](fitted.clmstan.md) for expected probabilities,
-[`posterior_predict.clmstan()`](posterior_predict.clmstan.md) for
-posterior predictive samples.
+[`fitted.clmstan()`](https://t-momozaki.github.io/clmstan/reference/fitted.clmstan.md)
+for expected probabilities,
+[`posterior_predict.clmstan()`](https://t-momozaki.github.io/clmstan/reference/posterior_predict.clmstan.md)
+for posterior predictive samples.

@@ -1,7 +1,8 @@
 # Combine Multiple Prior Specifications
 
-Combines multiple [`prior()`](prior.md) objects into a single prior
-specification list.
+Combines multiple
+[`prior()`](https://t-momozaki.github.io/clmstan/reference/prior.md)
+objects into a single prior specification list.
 
 ## Usage
 
@@ -14,7 +15,8 @@ c(...)
 
 - ...:
 
-  [`prior()`](prior.md) objects to combine.
+  [`prior()`](https://t-momozaki.github.io/clmstan/reference/prior.md)
+  objects to combine.
 
 ## Value
 

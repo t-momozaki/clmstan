@@ -13,9 +13,12 @@ prior(prior, class = "b", coef = "")
 
 - prior:
 
-  A distribution object created by [`normal()`](normal.md),
-  [`gamma()`](gamma.md), [`student_t()`](student_t.md), or
-  [`cauchy()`](cauchy.md).
+  A distribution object created by
+  [`normal()`](https://t-momozaki.github.io/clmstan/reference/normal.md),
+  [`gamma()`](https://t-momozaki.github.io/clmstan/reference/gamma.md),
+  [`student_t()`](https://t-momozaki.github.io/clmstan/reference/student_t.md),
+  or
+  [`cauchy()`](https://t-momozaki.github.io/clmstan/reference/cauchy.md).
 
 - class:
 
@@ -54,9 +57,11 @@ specification.
 
 ## See also
 
-[`normal()`](normal.md), [`gamma()`](gamma.md),
-[`student_t()`](student_t.md), [`cauchy()`](cauchy.md),
-[`clm_prior()`](clm_prior.md)
+[`normal()`](https://t-momozaki.github.io/clmstan/reference/normal.md),
+[`gamma()`](https://t-momozaki.github.io/clmstan/reference/gamma.md),
+[`student_t()`](https://t-momozaki.github.io/clmstan/reference/student_t.md),
+[`cauchy()`](https://t-momozaki.github.io/clmstan/reference/cauchy.md),
+[`clm_prior()`](https://t-momozaki.github.io/clmstan/reference/clm_prior.md)
 
 ## Examples
 

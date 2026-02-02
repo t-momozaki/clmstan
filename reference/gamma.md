@@ -1,6 +1,7 @@
 # Gamma Distribution for Prior Specification
 
-Creates a gamma distribution object for use with [`prior()`](prior.md).
+Creates a gamma distribution object for use with
+[`prior()`](https://t-momozaki.github.io/clmstan/reference/prior.md).
 
 ## Usage
 
@@ -31,8 +32,10 @@ gamma function, use
 
 ## See also
 
-[`prior()`](prior.md), [`normal()`](normal.md),
-[`student_t()`](student_t.md), [`cauchy()`](cauchy.md)
+[`prior()`](https://t-momozaki.github.io/clmstan/reference/prior.md),
+[`normal()`](https://t-momozaki.github.io/clmstan/reference/normal.md),
+[`student_t()`](https://t-momozaki.github.io/clmstan/reference/student_t.md),
+[`cauchy()`](https://t-momozaki.github.io/clmstan/reference/cauchy.md)
 
 ## Examples
 

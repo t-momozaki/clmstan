@@ -1,9 +1,10 @@
 # Flat (Improper Uniform) Prior Distribution
 
 Creates a flat (improper uniform) distribution object for use with
-[`prior()`](prior.md). A flat prior assigns equal probability density to
-all values, which is improper (does not integrate to 1) but can be used
-when the likelihood provides sufficient information for identification.
+[`prior()`](https://t-momozaki.github.io/clmstan/reference/prior.md). A
+flat prior assigns equal probability density to all values, which is
+improper (does not integrate to 1) but can be used when the likelihood
+provides sufficient information for identification.
 
 ## Usage
 
@@ -30,8 +31,10 @@ regularization.
 
 ## See also
 
-[`prior()`](prior.md), [`normal()`](normal.md),
-[`student_t()`](student_t.md), [`cauchy()`](cauchy.md)
+[`prior()`](https://t-momozaki.github.io/clmstan/reference/prior.md),
+[`normal()`](https://t-momozaki.github.io/clmstan/reference/normal.md),
+[`student_t()`](https://t-momozaki.github.io/clmstan/reference/student_t.md),
+[`cauchy()`](https://t-momozaki.github.io/clmstan/reference/cauchy.md)
 
 ## Examples
 

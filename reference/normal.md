@@ -1,6 +1,7 @@
 # Normal Distribution for Prior Specification
 
-Creates a normal distribution object for use with [`prior()`](prior.md).
+Creates a normal distribution object for use with
+[`prior()`](https://t-momozaki.github.io/clmstan/reference/prior.md).
 
 ## Usage
 
@@ -25,8 +26,10 @@ An object of class `"clm_dist"` representing a normal distribution.
 
 ## See also
 
-[`prior()`](prior.md), [`gamma()`](gamma.md),
-[`student_t()`](student_t.md), [`cauchy()`](cauchy.md)
+[`prior()`](https://t-momozaki.github.io/clmstan/reference/prior.md),
+[`gamma()`](https://t-momozaki.github.io/clmstan/reference/gamma.md),
+[`student_t()`](https://t-momozaki.github.io/clmstan/reference/student_t.md),
+[`cauchy()`](https://t-momozaki.github.io/clmstan/reference/cauchy.md)
 
 ## Examples
 

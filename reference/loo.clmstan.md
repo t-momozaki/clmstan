@@ -15,7 +15,8 @@ loo(x, ..., r_eff = NULL, cores = getOption("mc.cores", 1), save_psis = FALSE)
 
 - x:
 
-  A `clmstan` object returned by [`clm_stan`](clm_stan.md).
+  A `clmstan` object returned by
+  [`clm_stan`](https://t-momozaki.github.io/clmstan/reference/clm_stan.md).
 
 - ...:
 
@@ -71,7 +72,8 @@ compare multiple models. Models with higher `elpd_loo` are preferred.
 
 ## See also
 
-[`waic.clmstan`](waic.clmstan.md) for WAIC computation,
+[`waic.clmstan`](https://t-momozaki.github.io/clmstan/reference/waic.clmstan.md)
+for WAIC computation,
 [`loo`](https://mc-stan.org/loo/reference/loo.html) for details on the
 LOO algorithm,
 [`loo_compare`](https://mc-stan.org/loo/reference/loo_compare.html) for

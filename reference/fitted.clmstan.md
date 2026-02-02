@@ -22,7 +22,8 @@ fitted(
 
 - object:
 
-  A `clmstan` object returned by [`clm_stan()`](clm_stan.md).
+  A `clmstan` object returned by
+  [`clm_stan()`](https://t-momozaki.github.io/clmstan/reference/clm_stan.md).
 
 - newdata:
 
@@ -61,5 +62,5 @@ each category probability (`P[Y=1]`, `P[Y=2]`, etc.). If
 
 ## See also
 
-[`predict.clmstan()`](predict.clmstan.md),
-[`posterior_predict.clmstan()`](posterior_predict.clmstan.md)
+[`predict.clmstan()`](https://t-momozaki.github.io/clmstan/reference/predict.clmstan.md),
+[`posterior_predict.clmstan()`](https://t-momozaki.github.io/clmstan/reference/posterior_predict.clmstan.md)

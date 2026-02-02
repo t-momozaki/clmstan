@@ -14,7 +14,8 @@ waic(x, ...)
 
 - x:
 
-  A `clmstan` object returned by [`clm_stan`](clm_stan.md).
+  A `clmstan` object returned by
+  [`clm_stan`](https://t-momozaki.github.io/clmstan/reference/clm_stan.md).
 
 - ...:
 
@@ -41,12 +42,14 @@ preferred because:
 
 - It has been shown to be more reliable in practice
 
-For most purposes, [`loo.clmstan`](loo.clmstan.md) is recommended over
-WAIC.
+For most purposes,
+[`loo.clmstan`](https://t-momozaki.github.io/clmstan/reference/loo.clmstan.md)
+is recommended over WAIC.
 
 ## See also
 
-[`loo.clmstan`](loo.clmstan.md) for LOO-CV (recommended),
+[`loo.clmstan`](https://t-momozaki.github.io/clmstan/reference/loo.clmstan.md)
+for LOO-CV (recommended),
 [`waic`](https://mc-stan.org/loo/reference/waic.html) for details on
 WAIC computation,
 [`loo_compare`](https://mc-stan.org/loo/reference/loo_compare.html) for
