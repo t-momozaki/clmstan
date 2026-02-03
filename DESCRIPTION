@@ -1,7 +1,7 @@
 Package: clmstan
 Type: Package
 Title: Cumulative Link Models with CmdStanR
-Version: 0.0.1
+Version: 0.1.0
 Authors@R: person("Tomotaka", "Momozaki",
                   email = "momozaki.stat@gmail.com",
                   role = c("aut", "cre"))

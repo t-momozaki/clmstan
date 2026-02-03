@@ -31,6 +31,7 @@ This is consistent with other R packages that interface with Stan.
 ## Test environments
 
 * local macOS (aarch64-apple-darwin20), R 4.5.1
+* win-builder (R-devel)
 * GitHub Actions (ubuntu-latest): R release
 * GitHub Actions (macOS-latest): R release
 * GitHub Actions (windows-latest): R release
