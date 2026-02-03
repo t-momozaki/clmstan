@@ -36,7 +36,7 @@ jobs:
         shell: Rscript {0}
         run: |
           repos <- c(
-            "mc-stan" = "https://mc-stan.org/r-packages/",
+            "stan-dev" = "https://stan-dev.r-universe.dev",
             CRAN = "https://cloud.r-project.org"
           )
           options(repos = repos)
@@ -47,7 +47,7 @@ jobs:
       - name: Install CmdStan
         shell: Rscript {0}
         run: |
-          install.packages("cmdstanr", repos = c("https://mc-stan.org/r-packages/", getOption("repos")))
+          install.packages("cmdstanr", repos = c("https://stan-dev.r-universe.dev", getOption("repos")))
           cmdstanr::check_cmdstan_toolchain(fix = TRUE)
           cmdstanr::install_cmdstan()
 
