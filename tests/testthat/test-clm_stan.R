@@ -56,8 +56,9 @@ test_that("warmup parameter auto-adjustment works", {
                   refresh = 0)
 
   # iter_sampling = 200 - floor(200/2) = 200 - 100 = 100
-  expect_equal(fit$metadata()$iter_sampling, 100)
-  expect_equal(fit$metadata()$iter_warmup, 100)
+  # Access internal CmdStanMCMC object via fit$fit
+  expect_equal(fit$fit$metadata()$iter_sampling, 100)
+  expect_equal(fit$fit$metadata()$iter_warmup, 100)
 
   # Test 2: explicit warmup is respected
   fit2 <- clm_stan(rating ~ temp, data = wine,
@@ -65,8 +66,8 @@ test_that("warmup parameter auto-adjustment works", {
                    refresh = 0)
 
   # iter_sampling = 200 - 50 = 150
-  expect_equal(fit2$metadata()$iter_sampling, 150)
-  expect_equal(fit2$metadata()$iter_warmup, 50)
+  expect_equal(fit2$fit$metadata()$iter_sampling, 150)
+  expect_equal(fit2$fit$metadata()$iter_warmup, 50)
 })
 
 test_that("odd iter values work correctly with auto-adjustment", {
@@ -80,8 +81,9 @@ test_that("odd iter values work correctly with auto-adjustment", {
   fit <- clm_stan(rating ~ temp, data = wine,
                   chains = 1, iter = 201, refresh = 0)
 
-  expect_equal(fit$metadata()$iter_warmup, 100)
-  expect_equal(fit$metadata()$iter_sampling, 101)
+  # Access internal CmdStanMCMC object via fit$fit
+  expect_equal(fit$fit$metadata()$iter_warmup, 100)
+  expect_equal(fit$fit$metadata()$iter_sampling, 101)
 })
 
 # =============================================================================
