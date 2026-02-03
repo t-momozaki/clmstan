@@ -62,3 +62,5 @@ jobs:
       - uses: r-lib/actions/check-r-package@v2
         with:
           upload-snapshots: true
+          # Allow compilation flag warnings from CmdStan/instantiate
+          error-on: '"error"'
