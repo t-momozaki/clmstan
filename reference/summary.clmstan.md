@@ -37,4 +37,6 @@ An object of class "summary.clmstan" containing:
 
 - beta0: Posterior summary for intercept
 
+- link_params: Posterior summary for link parameters (full model only)
+
 - model_info: Model metadata (formula, link, threshold, K, N, P)

@@ -54,7 +54,7 @@
 <span>  prior <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  chains <span class="op">=</span> <span class="fl">4</span>,</span>
 <span>  iter <span class="op">=</span> <span class="fl">2000</span>,</span>
-<span>  warmup <span class="op">=</span> <span class="fl">1000</span>,</span>
+<span>  warmup <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -108,7 +108,7 @@
 
 
 <dt id="arg-warmup">warmup<a class="anchor" aria-label="anchor" href="#arg-warmup"></a></dt>
-<dd><p>Warmup iterations per chain (default: 1000)</p></dd>
+<dd><p>Warmup iterations per chain. If NULL (default), uses floor(iter/2)</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>

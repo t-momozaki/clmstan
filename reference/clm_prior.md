@@ -157,20 +157,17 @@ print(my_prior)
 #>   Cutpoints (flexible):
 #>     c_sd = 5
 
-# \donttest{
+if (FALSE) { # \dontrun{
 # Examples below require CmdStan and compiled Stan models
-if (instantiate::stan_cmdstan_exists()) {
-  data(wine, package = "ordinal")
+data(wine, package = "ordinal")
 
-  # Default priors (no customization needed)
-  fit <- clm_stan(rating ~ temp, data = wine,
-                  chains = 2, iter = 500, refresh = 0)
+# Default priors (no customization needed)
+fit <- clm_stan(rating ~ temp, data = wine,
+                chains = 2, iter = 500, warmup = 250, refresh = 0)
 
-  # Custom prior for regression coefficients
-  fit2 <- clm_stan(rating ~ temp, data = wine,
-                   prior = clm_prior(beta_sd = 1),
-                   chains = 2, iter = 500, refresh = 0)
-}
-#> Error in validate_sample_args(self, num_procs): Assertion on 'self$iter_sampling' failed: Element 1 is not >= 0.
-# }
+# Custom prior for regression coefficients
+fit2 <- clm_stan(rating ~ temp, data = wine,
+                 prior = clm_prior(beta_sd = 1),
+                 chains = 2, iter = 500, warmup = 250, refresh = 0)
+} # }
 ```

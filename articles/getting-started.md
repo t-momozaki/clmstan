@@ -567,7 +567,7 @@ fit <- clm_stan(rating ~ temp, data = wine,
 
 - [ordinal](https://cran.r-project.org/package=ordinal): Frequentist
   CLMs
-- [brms](https://paul-buerkner.github.io/brms/): Bayesian regression
+- [brms](https://paulbuerkner.com/brms/): Bayesian regression
   (rstan-based)
 
 ### Statistical References
