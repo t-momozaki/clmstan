@@ -13,3 +13,7 @@ docs/
 # Internal development documentation (keep locally, exclude from GitHub)
 INSTANTIATE_ISSUE.md
 STAN_DEVELOPMENT_GUIDE.md
+
+# R CMD check and build artifacts
+*.Rcheck/
+*.tar.gz

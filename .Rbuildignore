@@ -13,3 +13,4 @@
 ^INSTANTIATE_ISSUE\.md$
 ^STAN_DEVELOPMENT_GUIDE\.md$
 ^validation$
+^cran-comments\.md$
