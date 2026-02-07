@@ -158,6 +158,8 @@ clm_prior <- function(
 #' @param x A clm_prior object
 #' @param ... Additional arguments (ignored)
 #'
+#' @return Invisibly returns the input \code{clm_prior} object.
+#'
 #' @export
 print.clm_prior <- function(x, ...) {
   cat("clmstan prior specification:\n")
@@ -706,6 +708,8 @@ flat <- function() {
 #' @param x A clm_dist object
 #' @param ... Additional arguments (ignored)
 #'
+#' @return Invisibly returns the input \code{clm_dist} object.
+#'
 #' @export
 print.clm_dist <- function(x, ...) {
   cat(format_dist(x), "\n")
@@ -848,6 +852,8 @@ validate_prior_class_dist <- function(class, dist) {
 #' @param x A clm_prior_spec object
 #' @param ... Additional arguments (ignored)
 #'
+#' @return Invisibly returns the input \code{clm_prior_spec} object.
+#'
 #' @export
 print.clm_prior_spec <- function(x, ...) {
   cat("Prior: ", format_dist(x$prior), "\n", sep = "")
@@ -893,6 +899,8 @@ c.clm_prior_spec <- function(...) {
 #'
 #' @param x A clm_prior_list object
 #' @param ... Additional arguments (ignored)
+#'
+#' @return Invisibly returns the input \code{clm_prior_list} object.
 #'
 #' @export
 print.clm_prior_list <- function(x, ...) {

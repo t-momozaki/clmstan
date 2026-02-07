@@ -11,6 +11,9 @@
 
 \item{...}{Additional arguments (ignored)}
 }
+\value{
+Invisibly returns the input \code{clm_prior_spec} object.
+}
 \description{
 Print method for clm_prior_spec objects
 }

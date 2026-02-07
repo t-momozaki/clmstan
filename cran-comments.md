@@ -1,3 +1,16 @@
+## Resubmission
+
+This is a resubmission. In this version I have:
+
+* Put software names in single quotes in DESCRIPTION Title and Description
+  (e.g., 'CmdStanR', 'instantiate').
+* Expanded all acronyms in the Description field
+  (GEV = Generalized Extreme Value, AEP = Asymmetric Exponential Power).
+* Added references in the Description field with DOI/ISBN
+  (Agresti 2010, Wang and Dey 2011, Naranjo et al. 2015).
+* Added \value tags to all exported print methods
+  (print.clm_dist, print.clm_prior, print.clm_prior_spec, print.clm_prior_list).
+
 ## R CMD check results
 
 0 errors | 0 warnings | 1 note
