@@ -1,7 +1,7 @@
 Package: clmstan
 Type: Package
 Title: Cumulative Link Models with 'CmdStanR'
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: person("Tomotaka", "Momozaki",
                   email = "momozaki.stat@gmail.com",
                   role = c("aut", "cre"))
@@ -36,7 +36,6 @@ Suggests:
     cmdstanr (>= 0.9.0)
 Additional_repositories:
     https://stan-dev.r-universe.dev
-SystemRequirements: CmdStan (https://mc-stan.org/users/interfaces/cmdstan)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3

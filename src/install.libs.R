@@ -24,16 +24,28 @@ if (!file.exists(bin)) {
 }
 bin_stan <- file.path(bin, "stan")
 fs::dir_copy(path = "stan", new_path = bin_stan)
-callr::r(
-  func = function(bin_stan) {
-    # Get model files only from the top-level directory (not subdirectories like functions/)
-    # This prevents include files from being compiled as standalone models
-    model_files <- as.character(
-      fs::dir_ls(bin_stan, regexp = "[.]stan$", recurse = FALSE)
-    )
-    instantiate::stan_package_compile(models = model_files)
-  },
-  args = list(bin_stan = bin_stan),
-  show = TRUE,
-  stderr = "2>&1"
-)
+# Only attempt Stan model compilation if cmdstanr is available.
+# Without cmdstanr, compilation is not possible. Models will remain
+# uncompiled and can be compiled on first use.
+if (requireNamespace("cmdstanr", quietly = TRUE)) {
+  callr::r(
+    func = function(bin_stan) {
+      # Get model files only from the top-level directory (not subdirectories
+      # like functions/) to prevent include files from being compiled as
+      # standalone models
+      model_files <- as.character(
+        fs::dir_ls(bin_stan, regexp = "[.]stan$", recurse = FALSE)
+      )
+      instantiate::stan_package_compile(models = model_files)
+    },
+    args = list(bin_stan = bin_stan),
+    show = TRUE,
+    stderr = "2>&1"
+  )
+} else {
+  message(
+    "Note: Stan models were not compiled because 'cmdstanr' is not ",
+    "installed. Models will be compiled on first use if CmdStan is ",
+    "available. See <https://mc-stan.org/cmdstanr/> for details."
+  )
+}
