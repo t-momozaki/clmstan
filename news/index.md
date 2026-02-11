@@ -1,5 +1,19 @@
 # Changelog
 
+## clmstan 0.1.1
+
+Patch release addressing CRAN maintainer feedback.
+
+### Bug fixes
+
+- Suppressed misleading error message during package installation when
+  ‘cmdstanr’ is not available. Stan model compilation is now silently
+  skipped with an informational note instead of an error-like message.
+
+- Removed `SystemRequirements: CmdStan` from DESCRIPTION. CmdStan is not
+  required to install or check the package; it is only needed at runtime
+  for model fitting.
+
 ## clmstan 0.1.0
 
 Initial CRAN release.

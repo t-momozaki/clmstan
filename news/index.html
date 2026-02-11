@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">clmstan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,6 +37,15 @@
       <small>Source: <a href="https://github.com/t-momozaki/clmstan/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.1.1" id="clmstan-011">clmstan 0.1.1<a class="anchor" aria-label="anchor" href="#clmstan-011"></a></h2>
+<p>Patch release addressing CRAN maintainer feedback.</p>
+<div class="section level3">
+<h3 id="bug-fixes-0-1-1">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-1-1"></a></h3>
+<ul><li><p>Suppressed misleading error message during package installation when ‘cmdstanr’ is not available. Stan model compilation is now silently skipped with an informational note instead of an error-like message.</p></li>
+<li><p>Removed <code>SystemRequirements: CmdStan</code> from DESCRIPTION. CmdStan is not required to install or check the package; it is only needed at runtime for model fitting.</p></li>
+</ul></div>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.0" id="clmstan-010">clmstan 0.1.0<a class="anchor" aria-label="anchor" href="#clmstan-010"></a></h2>
 <p>Initial CRAN release.</p>
