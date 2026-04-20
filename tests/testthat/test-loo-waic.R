@@ -260,7 +260,11 @@ test_that("loo results can be used with loo_compare", {
   # loo_compare should work without error
   comparison <- loo::loo_compare(loo1, loo2)
 
-  expect_true(is.matrix(comparison))
+  if ("model" %in% colnames(comparison)) {
+    expect_true(is.data.frame(comparison))
+  } else {
+    expect_true(is.matrix(comparison))
+  }
   expect_equal(nrow(comparison), 2)
 })
 
@@ -276,6 +280,10 @@ test_that("waic results can be used with loo_compare", {
   # loo_compare should work with waic objects
   comparison <- loo::loo_compare(waic1, waic2)
 
-  expect_true(is.matrix(comparison))
+  if ("model" %in% colnames(comparison)) {
+    expect_true(is.data.frame(comparison))
+  } else {
+    expect_true(is.matrix(comparison))
+  }
   expect_equal(nrow(comparison), 2)
 })
