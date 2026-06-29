@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">clmstan</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,7 +41,7 @@
 <h2 class="pkg-version" data-toc-text="0.1.2" id="clmstan-012">clmstan 0.1.2<a class="anchor" aria-label="anchor" href="#clmstan-012"></a></h2>
 <div class="section level3">
 <h3 id="bug-fixes--compatibility-0-1-2">Bug fixes / Compatibility<a class="anchor" aria-label="anchor" href="#bug-fixes--compatibility-0-1-2"></a></h3>
-<ul><li>Updated compatibility with upcoming changes to <code><a href="https://mc-stan.org/loo/reference/loo_compare.html" class="external-link">loo_compare()</a></code> output structure in the <code>loo</code> package (&gt; 2.9.0), which now returns a data frame instead of a matrix and includes additional diagnostic columns.</li>
+<ul><li>Updated compatibility with upcoming changes to <code><a href="https://mc-stan.org/loo/reference/loo_compare.html" class="external-link">loo_compare()</a></code> output structure in the <code>loo</code> package (&gt; 2.9.0), which now returns a data frame instead of a matrix and includes additional diagnostic columns. The package now works with both the previous (matrix) and the new (data frame) output. Thanks to Florence Bockting (loo maintainer) for the reverse-dependency patch (<a href="https://github.com/t-momozaki/clmstan/issues/1" class="external-link">#1</a>).</li>
 </ul></div>
 </div>
     <div class="section level2">
