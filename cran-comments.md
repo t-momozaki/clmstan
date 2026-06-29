@@ -1,19 +1,29 @@
 ## Resubmission
 
-This is a patch release (0.1.1) addressing feedback from CRAN maintainer
-(Brian D. Ripley, 2026-02-12).
+This is a patch release (0.1.2) that addresses the CRAN check failures
+reported for the package (deadline 2026-07-20).
+
+The failures are caused by an upcoming change in the `loo` package: the
+output of `loo_compare()` is changing from a matrix to a data frame (with
+additional diagnostic columns). Two integration tests in this package
+asserted `is.matrix()` on that output and therefore began failing once the
+new `loo` became available on some check platforms.
 
 Changes in this version:
 
-* Fixed misleading error message during installation when 'cmdstanr' is not
-  available. The installation script (`src/install.libs.R`) now checks for
-  'cmdstanr' availability before attempting Stan model compilation, and
-  prints an informational note (not an error) when compilation is skipped.
+* Updated the affected tests to accept both the previous (matrix) and the
+  new (data frame) output of `loo_compare()`, so the package works with both
+  the current and the upcoming `loo` release. No version constraint on `loo`
+  is added, since both output formats are supported.
 
-* Removed `SystemRequirements: CmdStan` from DESCRIPTION. CmdStan is not
-  required to install or check the package.
+* This change was coordinated with the `loo` maintainer, who reviewed the
+  package during a reverse-dependency check and supplied the fix.
+
+No changes were made to exported functions or the package API.
 
 ## R CMD check results
+
+On a CRAN-like environment (without 'cmdstanr' installed):
 
 0 errors | 0 warnings | 1 note
 
@@ -21,29 +31,32 @@ Changes in this version:
 
 * Package suggests `cmdstanr` which is available from r-universe
   (https://stan-dev.r-universe.dev), as specified in `Additional_repositories`
-  in DESCRIPTION.
+  in DESCRIPTION. `cmdstanr` is only needed at runtime for model fitting, not
+  to install or check the package.
 
-### Regarding Compilation Flags WARNING (if reported)
+### Locally observed warnings/notes (environment-specific, not seen on CRAN)
 
-The package may show a warning about non-portable compilation flags such as:
+When checked locally with 'cmdstanr' installed and an older local toolchain,
+the following additional items appear. They are artifacts of the local
+environment, not package defects:
 
-```
-'-Wno-deprecated-declarations' '-Wno-ignored-attributes'
-'-Wno-sign-compare' '-Wno-tautological-compare'
-'-Wno-unknown-warning-option'
-```
+* "Compilation used the following non-portable flag(s)"
+  (`-Wno-deprecated-declarations`, `-Wno-ignored-attributes`,
+  `-Wno-sign-compare`, `-Wno-tautological-compare`,
+  `-Wno-unknown-warning-option`). These flags come from the Stan/CmdStan
+  build system (via the 'instantiate' package) when Stan models are compiled.
+  They are not controlled by this package. On CRAN, where 'cmdstanr' is not
+  installed, model compilation is skipped and this warning does not occur.
 
-These flags are used internally by CmdStan/Stan when compiling Stan models
-during package installation. They are not controlled by this package but are
-part of the Stan ecosystem's build system. The `instantiate` package
-(https://wlandau.github.io/instantiate/) handles the Stan model compilation,
-and these flags are necessary for successful compilation of Stan's C++ code.
-
-This is consistent with other R packages that interface with Stan.
+* "A complete check needs the 'checkbashisms' script" and an HTML Tidy note
+  ("'tidy' doesn't look like recent enough HTML Tidy") are due to tools
+  missing/outdated on the local machine and are not package issues.
 
 ## Test environments
 
 * local macOS (aarch64-apple-darwin20), R 4.5.1
+* local macOS, R 4.5.1, with the development version of `loo`
+  (new data-frame `loo_compare()` output) to confirm forward compatibility
 * GitHub Actions (ubuntu-latest): R release
 * GitHub Actions (macOS-latest): R release
 * GitHub Actions (windows-latest): R release

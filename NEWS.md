@@ -4,8 +4,10 @@
 
 * Updated compatibility with upcoming changes to `loo_compare()` output
   structure in the `loo` package (> 2.9.0), which now returns a data frame
-  instead of a matrix and includes additional diagnostic columns.
-
+  instead of a matrix and includes additional diagnostic columns. The package
+  now works with both the previous (matrix) and the new (data frame) output.
+  Thanks to Florence Bockting (loo maintainer) for the reverse-dependency
+  patch (#1).
 
 # clmstan 0.1.1
 
