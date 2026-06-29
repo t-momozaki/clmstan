@@ -29,6 +29,7 @@ This package requires:
 ### Step 1: Install cmdstanr
 
 ``` r
+
 # Install cmdstanr from r-universe (recommended)
 install.packages("cmdstanr",
                  repos = c("https://stan-dev.r-universe.dev",
@@ -38,6 +39,7 @@ install.packages("cmdstanr",
 ### Step 2: Install CmdStan
 
 ``` r
+
 library(cmdstanr)
 install_cmdstan()  # Only needed once
 ```
@@ -45,6 +47,7 @@ install_cmdstan()  # Only needed once
 ### Step 3: Install clmstan
 
 ``` r
+
 # From CRAN (when available)
 install.packages("clmstan")
 
@@ -59,6 +62,7 @@ automatically. This may take a few minutes on first install.
 ## Quick Start
 
 ``` r
+
 library(clmstan)
 
 # Example data
@@ -91,18 +95,19 @@ fit$fit$summary(variables = c("beta", "c_transformed", "beta0"))
 
 ### Flexible Links with Parameters (6)
 
-| Link         | Parameter                   | Description                                |
-|--------------|-----------------------------|--------------------------------------------|
-| tlink        | $\nu > 0$                   | $t$-distribution, adjustable tail weight   |
-| aranda_ordaz | $\lambda > 0$               | Generalized asymmetric link                |
-| sp           | $r > 0$, base               | Symmetric Power, adjustable skewness       |
-| log_gamma    | $\lambda \in {\mathbb{R}}$  | Continuous symmetric/asymmetric adjustment |
-| gev          | $\xi \in {\mathbb{R}}$      | Generalized Extreme Value                  |
-| aep          | $\theta_{1},\theta_{2} > 0$ | Asymmetric Exponential Power               |
+| Link | Parameter | Description |
+|----|----|----|
+| tlink | $`\nu > 0`$ | $`t`$-distribution, adjustable tail weight |
+| aranda_ordaz | $`\lambda > 0`$ | Generalized asymmetric link |
+| sp | $`r > 0`$, base | Symmetric Power, adjustable skewness |
+| log_gamma | $`\lambda \in \mathbb{R}`$ | Continuous symmetric/asymmetric adjustment |
+| gev | $`\xi \in \mathbb{R}`$ | Generalized Extreme Value |
+| aep | $`\theta_1, \theta_2 > 0`$ | Asymmetric Exponential Power |
 
 ### Using Flexible Links
 
 ``` r
+
 # Fixed parameter
 fit_t <- clm_stan(y ~ x, data = data, link = "tlink",
                   link_param = list(df = 8))
@@ -121,6 +126,7 @@ fit_gev <- clm_stan(y ~ x, data = data, link = "gev",
 | symmetric   | Symmetric around center          |
 
 ``` r
+
 # Equidistant thresholds
 fit_equi <- clm_stan(y ~ x, data = data, threshold = "equidistant")
 ```
@@ -131,22 +137,22 @@ fit_equi <- clm_stan(y ~ x, data = data, threshold = "equidistant")
 
 clmstan uses weakly informative default priors:
 
-| Parameter                         | Default Prior    |
-|-----------------------------------|------------------|
-| Regression coefficients ($\beta$) | `normal(0, 2.5)` |
-| Thresholds ($c$)                  | `normal(0, 10)`  |
-| Equidistant spacing ($d$)         | `gamma(2, 0.5)`  |
+| Parameter                           | Default Prior    |
+|-------------------------------------|------------------|
+| Regression coefficients ($`\beta`$) | `normal(0, 2.5)` |
+| Thresholds ($`c`$)                  | `normal(0, 10)`  |
+| Equidistant spacing ($`d`$)         | `gamma(2, 0.5)`  |
 
 For link parameters estimated via Bayesian inference:
 
-| Link         | Parameter               | Default Prior     |
-|--------------|-------------------------|-------------------|
-| tlink        | $\nu$                   | `gamma(2, 0.1)`   |
-| aranda_ordaz | $\lambda$               | `gamma(0.5, 0.5)` |
-| sp           | $r$                     | `gamma(0.5, 0.5)` |
-| log_gamma    | $\lambda$               | `normal(0, 1)`    |
-| gev          | $\xi$                   | `normal(0, 2)`    |
-| aep          | $\theta_{1},\theta_{2}$ | `gamma(2, 1)`     |
+| Link         | Parameter              | Default Prior     |
+|--------------|------------------------|-------------------|
+| tlink        | $`\nu`$                | `gamma(2, 0.1)`   |
+| aranda_ordaz | $`\lambda`$            | `gamma(0.5, 0.5)` |
+| sp           | $`r`$                  | `gamma(0.5, 0.5)` |
+| log_gamma    | $`\lambda`$            | `normal(0, 1)`    |
+| gev          | $`\xi`$                | `normal(0, 2)`    |
+| aep          | $`\theta_1, \theta_2`$ | `gamma(2, 1)`     |
 
 ### Custom Priors
 
@@ -155,6 +161,7 @@ Use the
 function with distribution helpers:
 
 ``` r
+
 # Tighter prior on regression coefficients
 fit <- clm_stan(y ~ x, data = data,
                 prior = prior(normal(0, 1), class = "b"))
@@ -172,6 +179,7 @@ fit <- clm_stan(y ~ x, data = data,
 When estimating link parameters, you can specify custom priors:
 
 ``` r
+
 # Custom prior for t-link df parameter
 fit <- clm_stan(y ~ x, data = data, link = "tlink",
                 link_param = list(df = "estimate"),
@@ -185,13 +193,13 @@ fit <- clm_stan(y ~ x, data = data, link = "gev",
 
 ### Available Distribution Functions
 
-| Function                                                           | Parameters                                  | Example                                                            |
-|--------------------------------------------------------------------|---------------------------------------------|--------------------------------------------------------------------|
-| `normal(mu, sigma)`                                                | $\mu$: mean, $\sigma$: SD                   | `normal(0, 2.5)`                                                   |
-| `gamma(alpha, beta)`                                               | $\alpha$: shape, $\beta$: rate              | `gamma(2, 0.1)`                                                    |
-| `student_t(df, mu, sigma)`                                         | $\nu$: df, $\mu$: location, $\sigma$: scale | `student_t(3, 0, 2.5)`                                             |
-| `cauchy(mu, sigma)`                                                | $\mu$: location, $\sigma$: scale            | `cauchy(0, 2.5)`                                                   |
-| [`flat()`](https://t-momozaki.github.io/clmstan/reference/flat.md) | none                                        | [`flat()`](https://t-momozaki.github.io/clmstan/reference/flat.md) |
+| Function | Parameters | Example |
+|----|----|----|
+| `normal(mu, sigma)` | $`\mu`$: mean, $`\sigma`$: SD | `normal(0, 2.5)` |
+| `gamma(alpha, beta)` | $`\alpha`$: shape, $`\beta`$: rate | `gamma(2, 0.1)` |
+| `student_t(df, mu, sigma)` | $`\nu`$: df, $`\mu`$: location, $`\sigma`$: scale | `student_t(3, 0, 2.5)` |
+| `cauchy(mu, sigma)` | $`\mu`$: location, $`\sigma`$: scale | `cauchy(0, 2.5)` |
+| [`flat()`](https://t-momozaki.github.io/clmstan/reference/flat.md) | none | [`flat()`](https://t-momozaki.github.io/clmstan/reference/flat.md) |
 
 **Note:**
 [`flat()`](https://t-momozaki.github.io/clmstan/reference/flat.md)
@@ -202,19 +210,19 @@ provides implicit regularization.
 
 ### Prior Classes
 
-| Class              | Description                            | Compatible Distributions        |
-|--------------------|----------------------------------------|---------------------------------|
-| `b`                | Regression coefficients ($\beta$)      | normal, student_t, cauchy, flat |
-| `Intercept`        | Thresholds ($c$, flexible)             | normal, student_t, cauchy, flat |
-| `c1`               | First threshold ($c_{1}$, equidistant) | normal, student_t, cauchy, flat |
-| `cpos`             | Positive thresholds (symmetric)        | normal, student_t, cauchy, flat |
-| `d`                | Equidistant spacing ($d$)              | gamma                           |
-| `df`               | t-link degrees of freedom ($\nu$)      | gamma                           |
-| `lambda_ao`        | Aranda-Ordaz $\lambda$                 | gamma                           |
-| `r`                | Symmetric Power $r$                    | gamma                           |
-| `lambda_lg`        | Log-gamma $\lambda$                    | normal, student_t, cauchy       |
-| `xi`               | GEV $\xi$                              | normal, student_t, cauchy       |
-| `theta1`, `theta2` | AEP shape ($\theta_{1},\theta_{2}$)    | gamma                           |
+| Class | Description | Compatible Distributions |
+|----|----|----|
+| `b` | Regression coefficients ($`\beta`$) | normal, student_t, cauchy, flat |
+| `Intercept` | Thresholds ($`c`$, flexible) | normal, student_t, cauchy, flat |
+| `c1` | First threshold ($`c_1`$, equidistant) | normal, student_t, cauchy, flat |
+| `cpos` | Positive thresholds (symmetric) | normal, student_t, cauchy, flat |
+| `d` | Equidistant spacing ($`d`$) | gamma |
+| `df` | t-link degrees of freedom ($`\nu`$) | gamma |
+| `lambda_ao` | Aranda-Ordaz $`\lambda`$ | gamma |
+| `r` | Symmetric Power $`r`$ | gamma |
+| `lambda_lg` | Log-gamma $`\lambda`$ | normal, student_t, cauchy |
+| `xi` | GEV $`\xi`$ | normal, student_t, cauchy |
+| `theta1`, `theta2` | AEP shape ($`\theta_1, \theta_2`$) | gamma |
 
 ## License
 

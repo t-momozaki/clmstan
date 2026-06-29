@@ -89,16 +89,16 @@ Flexible link parameters can be either **fixed** or **estimated**
 
 When using `"estimate"`, the following default priors are used:
 
-|              |           |                 |                                       |
-|--------------|-----------|-----------------|---------------------------------------|
-| Link         | Parameter | Default Prior   | Notes                                 |
-| tlink        | df        | gamma(2, 0.1)   | Mode around 10, allows heavy tails    |
-| aranda_ordaz | lambda    | gamma(0.5, 0.5) | Centered near 1 (logit)               |
-| gev          | xi        | normal(0, 2)    | Weakly informative, Wang & Dey (2011) |
-| sp           | r         | gamma(0.5, 0.5) | Centered near 1 (base distribution)   |
-| log_gamma    | lambda    | normal(0, 1)    | Centered at 0 (probit)                |
-| aep          | theta1    | gamma(2, 1)     | Mode at 1, symmetric at theta1=theta2 |
-| aep          | theta2    | gamma(2, 1)     | Mode at 1, symmetric at theta1=theta2 |
+|  |  |  |  |
+|----|----|----|----|
+| Link | Parameter | Default Prior | Notes |
+| tlink | df | gamma(2, 0.1) | Mode around 10, allows heavy tails |
+| aranda_ordaz | lambda | gamma(0.5, 0.5) | Centered near 1 (logit) |
+| gev | xi | normal(0, 2) | Weakly informative, Wang & Dey (2011) |
+| sp | r | gamma(0.5, 0.5) | Centered near 1 (base distribution) |
+| log_gamma | lambda | normal(0, 1) | Centered at 0 (probit) |
+| aep | theta1 | gamma(2, 1) | Mode at 1, symmetric at theta1=theta2 |
+| aep | theta2 | gamma(2, 1) | Mode at 1, symmetric at theta1=theta2 |
 
 ## SP Link Details (Li et al., 2019)
 

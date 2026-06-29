@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Link Functions in clmstan • clmstan</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Link Functions in clmstan">
 </head>
@@ -452,18 +452,18 @@ performance across all 11 models:</p>
 <span>  aep <span class="op">=</span> <span class="va">loo_aep</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu">loo</span><span class="fu">::</span><span class="fu"><a href="https://mc-stan.org/loo/reference/loo_compare.html" class="external-link">loo_compare</a></span><span class="op">(</span><span class="va">loo_list</span><span class="op">)</span></span>
-<span><span class="co">#&gt;              elpd_diff se_diff</span></span>
-<span><span class="co">#&gt; probit        0.0       0.0   </span></span>
-<span><span class="co">#&gt; tlink        -0.5       0.4   </span></span>
-<span><span class="co">#&gt; logit        -0.6       0.5   </span></span>
-<span><span class="co">#&gt; gev          -0.9       0.4   </span></span>
-<span><span class="co">#&gt; cloglog      -1.0       1.6   </span></span>
-<span><span class="co">#&gt; sp           -1.3       0.6   </span></span>
-<span><span class="co">#&gt; aranda_ordaz -1.3       0.5   </span></span>
-<span><span class="co">#&gt; loglog       -2.3       1.8   </span></span>
-<span><span class="co">#&gt; log_gamma    -4.8       1.0   </span></span>
-<span><span class="co">#&gt; aep          -5.6       1.7   </span></span>
-<span><span class="co">#&gt; cauchit      -7.6       2.7</span></span></code></pre></div>
+<span><span class="co">#&gt;         model elpd_diff se_diff p_worse diag_diff       diag_elpd</span></span>
+<span><span class="co">#&gt;        probit       0.0     0.0      NA                          </span></span>
+<span><span class="co">#&gt;         tlink      -0.5     0.4    0.93   N &lt; 100                </span></span>
+<span><span class="co">#&gt;         logit      -0.6     0.5    0.89   N &lt; 100                </span></span>
+<span><span class="co">#&gt;           gev      -0.9     0.4    0.98   N &lt; 100                </span></span>
+<span><span class="co">#&gt;       cloglog      -1.0     1.6    0.73   N &lt; 100 2 k_psis &gt; 0.67</span></span>
+<span><span class="co">#&gt;            sp      -1.3     0.6    0.99   N &lt; 100                </span></span>
+<span><span class="co">#&gt;  aranda_ordaz      -1.3     0.5    0.99   N &lt; 100                </span></span>
+<span><span class="co">#&gt;        loglog      -2.3     1.8    0.90   N &lt; 100 1 k_psis &gt; 0.67</span></span>
+<span><span class="co">#&gt;           aep      -5.1     1.5    1.00   N &lt; 100                </span></span>
+<span><span class="co">#&gt;     log_gamma      -5.9     1.2    1.00   N &lt; 100 2 k_psis &gt; 0.67</span></span>
+<span><span class="co">#&gt;       cauchit      -7.6     2.7    1.00   N &lt; 100</span></span></code></pre></div>
 <p><strong>How to interpret:</strong></p>
 <ul>
 <li>Models are sorted by expected log predictive density (best
@@ -474,7 +474,7 @@ best)</li>
 <li>
 <code>se_diff</code>: Standard error of the difference</li>
 <li>Rule of thumb: If
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">|</mo><mtext mathvariant="monospace">𝚎𝚕𝚙𝚍_𝚍𝚒𝚏𝚏</mtext><mo stretchy="true" form="postfix">|</mo></mrow><mo>&lt;</mo><mn>2</mn><mo>×</mo><mtext mathvariant="monospace">𝚜𝚎_𝚍𝚒𝚏𝚏</mtext></mrow><annotation encoding="application/x-tex">|\texttt{elpd\_diff}| &lt; 2 \times \texttt{se\_diff}</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">|</mo><mtext mathvariant="monospace">𝚎𝚕𝚙𝚍_𝚍𝚒𝚏𝚏</mtext><mo stretchy="false" form="prefix">|</mo><mo>&lt;</mo><mn>2</mn><mo>×</mo><mtext mathvariant="monospace">𝚜𝚎_𝚍𝚒𝚏𝚏</mtext></mrow><annotation encoding="application/x-tex">|\texttt{elpd\_diff}| &lt; 2 \times \texttt{se\_diff}</annotation></semantics></math>,
 the difference is not significant</li>
 </ul>
 <p><strong>Note:</strong> WAIC (Widely Applicable Information Criterion)
@@ -522,17 +522,17 @@ signs and relative importance instead.</p>
 <span><span class="co">#&gt; 2 aranda_ordaz   lambda  1.1162084  1.0284254  0.2799335  0.81190743  4.0844419</span></span>
 <span><span class="co">#&gt; 3          gev       xi -0.2751134  0.1721647 -0.6038121 -0.27820272  0.0847995</span></span>
 <span><span class="co">#&gt; 4           sp        r  1.0396368  0.3859994  0.4388587  0.98611015  2.0196172</span></span>
-<span><span class="co">#&gt; 5    log_gamma   lambda -0.1094952  0.6567701 -1.5554499 -0.02322702  1.0280382</span></span>
-<span><span class="co">#&gt; 6          aep   theta1  0.9577882  0.7939766  0.2796018  0.68772842  3.1507534</span></span>
-<span><span class="co">#&gt; 7          aep   theta2  1.1513928  0.8045819  0.3285152  0.91051747  3.4711979</span></span>
-<span><span class="co">#&gt;        rhat   ess_bulk  ess_tail</span></span>
-<span><span class="co">#&gt; 1 0.9999437 670.638466 583.95919</span></span>
-<span><span class="co">#&gt; 2 1.0098237 239.821331 271.24284</span></span>
-<span><span class="co">#&gt; 3 1.0017794 390.305936 363.24424</span></span>
-<span><span class="co">#&gt; 4 1.0018915 250.191143 322.13696</span></span>
-<span><span class="co">#&gt; 5 1.8545622   2.979474 109.62488</span></span>
-<span><span class="co">#&gt; 6 1.0690526  30.480243  63.40078</span></span>
-<span><span class="co">#&gt; 7 1.0551250  39.044523 241.81909</span></span></code></pre></div>
+<span><span class="co">#&gt; 5    log_gamma   lambda -0.1504433  0.5825221 -1.6059357 -0.02311868  0.6245536</span></span>
+<span><span class="co">#&gt; 6          aep   theta1  1.0214931  0.7757722  0.3074226  0.76960103  3.0987387</span></span>
+<span><span class="co">#&gt; 7          aep   theta2  1.2506271  1.0471035  0.3373869  0.90380527  4.0876131</span></span>
+<span><span class="co">#&gt;        rhat   ess_bulk ess_tail</span></span>
+<span><span class="co">#&gt; 1 0.9999437 670.638466 583.9592</span></span>
+<span><span class="co">#&gt; 2 1.0098237 239.821331 271.2428</span></span>
+<span><span class="co">#&gt; 3 1.0017794 390.305936 363.2442</span></span>
+<span><span class="co">#&gt; 4 1.0018915 250.191143 322.1370</span></span>
+<span><span class="co">#&gt; 5 1.8432617   3.011494  86.3296</span></span>
+<span><span class="co">#&gt; 6 1.0005935  55.724476 147.1933</span></span>
+<span><span class="co">#&gt; 7 1.0234559  59.789756 127.8718</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">

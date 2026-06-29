@@ -1,6 +1,18 @@
 # Changelog
 
+## clmstan 0.1.2
+
+### Bug fixes / Compatibility
+
+- Updated compatibility with upcoming changes to
+  [`loo_compare()`](https://mc-stan.org/loo/reference/loo_compare.html)
+  output structure in the `loo` package (\> 2.9.0), which now returns a
+  data frame instead of a matrix and includes additional diagnostic
+  columns.
+
 ## clmstan 0.1.1
+
+CRAN release: 2026-02-12
 
 Patch release addressing CRAN maintainer feedback.
 
@@ -15,6 +27,8 @@ Patch release addressing CRAN maintainer feedback.
   for model fitting.
 
 ## clmstan 0.1.0
+
+CRAN release: 2026-02-10
 
 Initial CRAN release.
 

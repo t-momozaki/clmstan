@@ -11,18 +11,19 @@ models**: Fast execution via the instantiate package
 
 ### Comparison with ordinal::clm()
 
-| Feature                       | ordinal::clm()     | clmstan                      |
-|-------------------------------|--------------------|------------------------------|
-| Inference                     | Maximum likelihood | Bayesian (MCMC)              |
-| Uncertainty                   | Asymptotic SE      | Posterior distribution       |
-| Link functions                | 5 standard         | 11 (5 standard + 6 flexible) |
-| Estimation of link parameters | No                 | Yes                          |
+| Feature | ordinal::clm() | clmstan |
+|----|----|----|
+| Inference | Maximum likelihood | Bayesian (MCMC) |
+| Uncertainty | Asymptotic SE | Posterior distribution |
+| Link functions | 5 standard | 11 (5 standard + 6 flexible) |
+| Estimation of link parameters | No | Yes |
 
 ## Installation
 
 Before using clmstan, you need to install CmdStan:
 
 ``` r
+
 # Step 1: Install cmdstanr
 install.packages("cmdstanr",
                  repos = c("https://stan-dev.r-universe.dev",
@@ -41,6 +42,7 @@ install_cmdstan()
 Fit a cumulative link model in just a few lines:
 
 ``` r
+
 library(clmstan)
 library(ordinal)
 data(wine)
@@ -75,6 +77,7 @@ is straightforward:
 ### Example Comparison
 
 ``` r
+
 library(ordinal)
 library(clmstan)
 data(wine)
@@ -110,6 +113,7 @@ clmstan supports 11 link functions, more than any other CLM package.
 ### Standard Links (5)
 
 ``` r
+
 # View available link functions
 supported_links("standard")
 
@@ -141,6 +145,7 @@ theoretical background, see Wang & Dey (2011) for GEV, Jiang & Dey
 (2015) for SP, and Naranjo et al. (2015) for AEP.
 
 ``` r
+
 # View flexible link functions
 supported_links("flexible")
 
@@ -197,6 +202,7 @@ fit_aep <- clm_stan(rating ~ temp, data = wine, link = "aep",
 clmstan supports three threshold parameterizations:
 
 ``` r
+
 # View available threshold structures
 supported_thresholds()
 ```
@@ -206,6 +212,7 @@ supported_thresholds()
 Each threshold is freely estimated (K-1 parameters for K categories):
 
 ``` r
+
 fit_flex <- clm_stan(rating ~ temp, data = wine, threshold = "flexible",
                      chains = 2, iter = 1000, warmup = 500)
 ```
@@ -215,6 +222,7 @@ fit_flex <- clm_stan(rating ~ temp, data = wine, threshold = "flexible",
 Thresholds are equally spaced (2 parameters: start + interval):
 
 ``` r
+
 # Useful for Likert scales with assumed equal intervals
 fit_equi <- clm_stan(rating ~ temp, data = wine, threshold = "equidistant",
                      chains = 2, iter = 1000, warmup = 500)
@@ -226,6 +234,7 @@ Thresholds are symmetric around zero (useful for scales with a neutral
 center):
 
 ``` r
+
 fit_sym <- clm_stan(rating ~ temp, data = wine, threshold = "symmetric",
                     chains = 2, iter = 1000, warmup = 500)
 ```
@@ -252,6 +261,7 @@ The [`prior()`](https://t-momozaki.github.io/clmstan/reference/prior.md)
 function provides a brms-like interface:
 
 ``` r
+
 # Single prior
 fit <- clm_stan(rating ~ temp, data = wine,
                 prior = prior(normal(0, 1), class = "b"),
@@ -275,6 +285,7 @@ fit_gev <- clm_stan(rating ~ temp, data = wine, link = "gev",
 ### Available Distributions
 
 ``` r
+
 normal(mu, sigma)      # Normal distribution
 gamma(alpha, beta)     # Gamma distribution (shape, rate)
 student_t(df, mu, sigma)  # Student-t distribution
@@ -284,23 +295,24 @@ flat()                 # Flat (improper) prior
 
 ### Prior Classes
 
-| Class                  | Description                     | Compatible Distributions        |
-|------------------------|---------------------------------|---------------------------------|
-| `"b"`                  | Regression coefficients         | normal, student_t, cauchy, flat |
-| `"Intercept"`          | Thresholds (flexible)           | normal, student_t, cauchy, flat |
-| `"c1"`                 | First threshold (equidistant)   | normal, student_t, cauchy, flat |
-| `"d"`                  | Interval (equidistant)          | gamma                           |
-| `"cpos"`               | Positive thresholds (symmetric) | normal, student_t, cauchy, flat |
-| `"df"`                 | t-link degrees of freedom       | gamma                           |
-| `"xi"`                 | GEV shape parameter             | normal, student_t, cauchy       |
-| `"r"`                  | SP skewness parameter           | gamma                           |
-| `"theta1"`, `"theta2"` | AEP shape parameters            | gamma                           |
+| Class | Description | Compatible Distributions |
+|----|----|----|
+| `"b"` | Regression coefficients | normal, student_t, cauchy, flat |
+| `"Intercept"` | Thresholds (flexible) | normal, student_t, cauchy, flat |
+| `"c1"` | First threshold (equidistant) | normal, student_t, cauchy, flat |
+| `"d"` | Interval (equidistant) | gamma |
+| `"cpos"` | Positive thresholds (symmetric) | normal, student_t, cauchy, flat |
+| `"df"` | t-link degrees of freedom | gamma |
+| `"xi"` | GEV shape parameter | normal, student_t, cauchy |
+| `"r"` | SP skewness parameter | gamma |
+| `"theta1"`, `"theta2"` | AEP shape parameters | gamma |
 
 ### Legacy API (clm_prior)
 
 For backward compatibility:
 
 ``` r
+
 fit <- clm_stan(rating ~ temp, data = wine,
                 prior = clm_prior(beta_sd = 1, c_sd = 5),
                 chains = 2, iter = 1000, warmup = 500)
@@ -311,6 +323,7 @@ fit <- clm_stan(rating ~ temp, data = wine,
 ### Basic Methods
 
 ``` r
+
 fit <- clm_stan(rating ~ temp + contact, data = wine,
                 chains = 4, iter = 2000, warmup = 1000)
 
@@ -329,6 +342,7 @@ coef(fit, type = "median")   # Posterior median
 ### Diagnostic Plots
 
 ``` r
+
 # Trace plots (check mixing)
 plot(fit, type = "trace")
 
@@ -348,6 +362,7 @@ plot(fit, type = "trace", pars = c("beta[1]", "beta[2]"))
 ### Convergence Diagnostics
 
 ``` r
+
 # Quick summary
 diagnostics(fit)
 
@@ -365,6 +380,7 @@ values suggest inefficient sampling) - **Divergences**: Should be 0
 ### Category Prediction
 
 ``` r
+
 fit <- clm_stan(rating ~ temp + contact, data = wine,
                 chains = 4, iter = 2000, warmup = 1000)
 
@@ -383,6 +399,7 @@ predict(fit, newdata = newdata, type = "class")
 ### Probability Prediction
 
 ``` r
+
 # Predicted probabilities for each category
 pred_probs <- predict(fit, type = "probs")
 head(pred_probs)
@@ -395,6 +412,7 @@ head(fitted_vals)
 ### Posterior Predictive Distribution
 
 ``` r
+
 # Draw from posterior predictive distribution
 y_rep <- posterior_predict(fit)
 dim(y_rep)  # draws x observations
@@ -408,6 +426,7 @@ pred_draws <- predict(fit, type = "class", summary = FALSE)
 Use LOO-CV (Leave-One-Out Cross-Validation) for model comparison:
 
 ``` r
+
 # Fit competing models
 fit1 <- clm_stan(rating ~ temp, data = wine, link = "logit",
                  chains = 4, iter = 2000, warmup = 1000)
@@ -443,6 +462,7 @@ suggest unreliable LOO estimates for those observations
 Here’s a recommended workflow for ordinal data analysis:
 
 ``` r
+
 library(clmstan)
 library(ordinal)
 data(wine)
@@ -485,6 +505,7 @@ plot(fit_base, type = "intervals")
 ### CmdStan Not Found
 
 ``` r
+
 # Check CmdStan installation
 cmdstanr::cmdstan_path()
 cmdstanr::cmdstan_version()
@@ -498,6 +519,7 @@ cmdstanr::install_cmdstan()
 If you see Rhat \> 1.01 or low ESS:
 
 ``` r
+
 # Increase iterations and warmup
 fit <- clm_stan(rating ~ temp, data = wine,
                 chains = 4,
@@ -530,6 +552,7 @@ the posterior:
 4.  **Check data**: Look for separation or outliers
 
 ``` r
+
 # High adapt_delta
 fit <- clm_stan(rating ~ temp, data = wine,
                 chains = 4,
@@ -543,6 +566,7 @@ fit <- clm_stan(rating ~ temp, data = wine,
 For large datasets:
 
 ``` r
+
 # Reduce number of chains
 fit <- clm_stan(rating ~ temp, data = wine,
                 chains = 2,

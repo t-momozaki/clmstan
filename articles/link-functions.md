@@ -8,6 +8,7 @@ properties of each link function - Visual comparison of their CDFs - How
 to choose the best link for your data
 
 ``` r
+
 library(clmstan)
 library(ordinal)
 library(loo)
@@ -32,16 +33,17 @@ Standard links have no adjustable parameters:
 
 Flexible links have parameters that can be fixed or estimated from data:
 
-| Link             | Parameters                  | Special Cases                                                        |
-|------------------|-----------------------------|----------------------------------------------------------------------|
-| **tlink**        | $\text{df} > 0$             | $\left. \text{df}\rightarrow\infty \right.$: probit                  |
-| **aranda_ordaz** | $\lambda > 0$               | $\lambda = 1$: logit; $\left. \lambda\rightarrow 0 \right.$: cloglog |
-| **gev**          | $\xi \in {\mathbb{R}}$      | $\xi = 0$: loglog (Gumbel)                                           |
-| **sp**           | $r > 0$, base               | $r = 1$: base distribution                                           |
-| **log_gamma**    | $\lambda \in {\mathbb{R}}$  | $\lambda = 0$: probit                                                |
-| **aep**          | $\theta_{1},\theta_{2} > 0$ | $\theta_{1} = \theta_{2} = 2$: similar to probit                     |
+| Link | Parameters | Special Cases |
+|----|----|----|
+| **tlink** | $`\text{df} > 0`$ | $`\text{df} \to \infty`$: probit |
+| **aranda_ordaz** | $`\lambda > 0`$ | $`\lambda = 1`$: logit; $`\lambda \to 0`$: cloglog |
+| **gev** | $`\xi \in \mathbb{R}`$ | $`\xi = 0`$: loglog (Gumbel) |
+| **sp** | $`r > 0`$, base | $`r = 1`$: base distribution |
+| **log_gamma** | $`\lambda \in \mathbb{R}`$ | $`\lambda = 0`$: probit |
+| **aep** | $`\theta_1, \theta_2 > 0`$ | $`\theta_1 = \theta_2 = 2`$: similar to probit |
 
 ``` r
+
 supported_links()
 #>  [1] "logit"        "probit"       "cloglog"      "loglog"       "cauchit"     
 #>  [6] "tlink"        "aranda_ordaz" "gev"          "sp"           "log_gamma"   
@@ -57,6 +59,7 @@ behavior, especially for extreme categories.
 ### Standard Link CDFs
 
 ``` r
+
 x <- seq(-4, 4, length.out = 200)
 
 cdfs <- data.frame(
@@ -93,10 +96,11 @@ abline(h = 0.5, lty = 3, col = "gray")
 
 ### t-link: Adjustable Tail Weight
 
-The t-link interpolates between cauchit ($\text{df} = 1$) and probit
-($\left. \text{df}\rightarrow\infty \right.$):
+The t-link interpolates between cauchit ($`\text{df}=1`$) and probit
+($`\text{df} \to \infty`$):
 
 ``` r
+
 x <- seq(-4, 4, length.out = 200)
 
 par(mar = c(4, 4, 2, 1))
@@ -120,46 +124,46 @@ abline(h = 0.5, lty = 3, col = "gray")
 
 **Guidelines for df:**
 
-| df     | Tail behavior | Equivalent to |
-|--------|---------------|---------------|
-| 1      | Very heavy    | cauchit       |
-| 2–3    | Heavy         | —             |
-| 4–8    | Moderate      | —             |
-| $> 30$ | Light         | probit        |
+| df      | Tail behavior | Equivalent to |
+|---------|---------------|---------------|
+| 1       | Very heavy    | cauchit       |
+| 2–3     | Heavy         | —             |
+| 4–8     | Moderate      | —             |
+| $`>30`$ | Light         | probit        |
 
 ### Other Flexible Links
 
 **Aranda-Ordaz:**
 
-- $\lambda = 1$: Equivalent to logit
-- $\left. \lambda\rightarrow 0 \right.$: Approaches cloglog
+- $`\lambda = 1`$: Equivalent to logit
+- $`\lambda \to 0`$: Approaches cloglog
 - Useful for testing proportional odds assumption
 
 **GEV (Generalized Extreme Value):**
 
-- $\xi = 0$: Gumbel type (equivalent to loglog)
-- $\xi > 0$: Fréchet type (heavy upper tail)
-- $\xi < 0$: Weibull type (bounded upper tail)
+- $`\xi = 0`$: Gumbel type (equivalent to loglog)
+- $`\xi > 0`$: Fréchet type (heavy upper tail)
+- $`\xi < 0`$: Weibull type (bounded upper tail)
 
 **SP (Symmetric Power):**
 
-- $r = 1$: Base distribution (e.g., logit)
-- $r < 1$: Positively skewed
-- $r > 1$: Negatively skewed
+- $`r = 1`$: Base distribution (e.g., logit)
+- $`r < 1`$: Positively skewed
+- $`r > 1`$: Negatively skewed
 
 **Log-Gamma:**
 
-- $\lambda = 0$: Equivalent to probit
-- $\lambda > 0$: Heavier right tail
-- $\lambda < 0$: Heavier left tail
+- $`\lambda = 0`$: Equivalent to probit
+- $`\lambda > 0`$: Heavier right tail
+- $`\lambda < 0`$: Heavier left tail
 
 **AEP (Asymmetric Exponential Power):**
 
-- $\theta_{1},\theta_{2} > 0$: Shape parameters controlling left and
+- $`\theta_1, \theta_2 > 0`$: Shape parameters controlling left and
   right tails
-- $\theta_{1} = \theta_{2} = 2$: Similar to probit (normal-like)
-- $\theta_{1} = \theta_{2} = 1$: Laplace-like (heavier tails)
-- $\theta_{1} \neq \theta_{2}$: Asymmetric tails
+- $`\theta_1 = \theta_2 = 2`$: Similar to probit (normal-like)
+- $`\theta_1 = \theta_2 = 1`$: Laplace-like (heavier tails)
+- $`\theta_1 \neq \theta_2`$: Asymmetric tails
 
 ## Practical Comparison
 
@@ -169,6 +173,7 @@ We compare link functions using the `wine` dataset. First, we fit models
 with the five standard links:
 
 ``` r
+
 set.seed(42)
 
 fit_logit <- clm_stan(rating ~ temp + contact, data = wine, link = "logit",
@@ -191,6 +196,7 @@ Next, we fit models with the six flexible links. These links have
 parameters that are estimated from the data:
 
 ``` r
+
 fit_tlink <- clm_stan(rating ~ temp + contact, data = wine, link = "tlink",
                       link_param = list(df = "estimate"),
                       chains = 2, iter = 1000, warmup = 500, refresh = 0)
@@ -222,6 +228,7 @@ We use leave-one-out cross-validation (LOO-CV) to compare predictive
 performance across all 11 models:
 
 ``` r
+
 # Compute LOO for standard links
 loo_logit <- loo(fit_logit)
 loo_probit <- loo(fit_probit)
@@ -239,6 +246,7 @@ loo_aep <- loo(fit_aep)
 ```
 
 ``` r
+
 # Compare all 11 link functions (sorted by expected log predictive density)
 loo_list <- list(
   logit = loo_logit,
@@ -254,18 +262,18 @@ loo_list <- list(
   aep = loo_aep
 )
 loo::loo_compare(loo_list)
-#>              elpd_diff se_diff
-#> probit        0.0       0.0   
-#> tlink        -0.5       0.4   
-#> logit        -0.6       0.5   
-#> gev          -0.9       0.4   
-#> cloglog      -1.0       1.6   
-#> sp           -1.3       0.6   
-#> aranda_ordaz -1.3       0.5   
-#> loglog       -2.3       1.8   
-#> log_gamma    -4.8       1.0   
-#> aep          -5.6       1.7   
-#> cauchit      -7.6       2.7
+#>         model elpd_diff se_diff p_worse diag_diff       diag_elpd
+#>        probit       0.0     0.0      NA                          
+#>         tlink      -0.5     0.4    0.93   N < 100                
+#>         logit      -0.6     0.5    0.89   N < 100                
+#>           gev      -0.9     0.4    0.98   N < 100                
+#>       cloglog      -1.0     1.6    0.73   N < 100 2 k_psis > 0.67
+#>            sp      -1.3     0.6    0.99   N < 100                
+#>  aranda_ordaz      -1.3     0.5    0.99   N < 100                
+#>        loglog      -2.3     1.8    0.90   N < 100 1 k_psis > 0.67
+#>           aep      -5.1     1.5    1.00   N < 100                
+#>     log_gamma      -5.9     1.2    1.00   N < 100 2 k_psis > 0.67
+#>       cauchit      -7.6     2.7    1.00   N < 100
 ```
 
 **How to interpret:**
@@ -274,8 +282,8 @@ loo::loo_compare(loo_list)
 - `elpd_diff`: Difference from the best model (0 = best)
 - `se_diff`: Standard error of the difference
 - Rule of thumb: If
-  $\left| \texttt{𝚎𝚕𝚙𝚍\_𝚍𝚒𝚏𝚏} \right| < 2 \times \texttt{𝚜𝚎\_𝚍𝚒𝚏𝚏}$, the
-  difference is not significant
+  $`|\texttt{elpd\_diff}| < 2 \times \texttt{se\_diff}`$, the difference
+  is not significant
 
 **Note:** WAIC (Widely Applicable Information Criterion) is also
 available via `waic(fit)`. LOO-CV is generally preferred as it provides
@@ -286,6 +294,7 @@ diagnostics for problematic observations (Pareto k values).
 **Coefficient comparison across standard links:**
 
 ``` r
+
 coefs <- data.frame(
   logit = coef(fit_logit),
   probit = coef(fit_probit),
@@ -310,6 +319,7 @@ signs and relative importance instead.
 **Estimated link parameters for flexible links:**
 
 ``` r
+
 # Combine all flexible link parameter estimates into one table
 link_params_all <- rbind(
   cbind(link = "tlink", summary(fit_tlink)$link_params),
@@ -325,34 +335,34 @@ link_params_all
 #> 2 aranda_ordaz   lambda  1.1162084  1.0284254  0.2799335  0.81190743  4.0844419
 #> 3          gev       xi -0.2751134  0.1721647 -0.6038121 -0.27820272  0.0847995
 #> 4           sp        r  1.0396368  0.3859994  0.4388587  0.98611015  2.0196172
-#> 5    log_gamma   lambda -0.1094952  0.6567701 -1.5554499 -0.02322702  1.0280382
-#> 6          aep   theta1  0.9577882  0.7939766  0.2796018  0.68772842  3.1507534
-#> 7          aep   theta2  1.1513928  0.8045819  0.3285152  0.91051747  3.4711979
-#>        rhat   ess_bulk  ess_tail
-#> 1 0.9999437 670.638466 583.95919
-#> 2 1.0098237 239.821331 271.24284
-#> 3 1.0017794 390.305936 363.24424
-#> 4 1.0018915 250.191143 322.13696
-#> 5 1.8545622   2.979474 109.62488
-#> 6 1.0690526  30.480243  63.40078
-#> 7 1.0551250  39.044523 241.81909
+#> 5    log_gamma   lambda -0.1504433  0.5825221 -1.6059357 -0.02311868  0.6245536
+#> 6          aep   theta1  1.0214931  0.7757722  0.3074226  0.76960103  3.0987387
+#> 7          aep   theta2  1.2506271  1.0471035  0.3373869  0.90380527  4.0876131
+#>        rhat   ess_bulk ess_tail
+#> 1 0.9999437 670.638466 583.9592
+#> 2 1.0098237 239.821331 271.2428
+#> 3 1.0017794 390.305936 363.2442
+#> 4 1.0018915 250.191143 322.1370
+#> 5 1.8432617   3.011494  86.3296
+#> 6 1.0005935  55.724476 147.1933
+#> 7 1.0234559  59.789756 127.8718
 ```
 
 ## Quick Reference
 
-| Link         | Usage                                                                       | When to use                                         |
-|--------------|-----------------------------------------------------------------------------|-----------------------------------------------------|
-| logit        | `link = "logit"`                                                            | Proportional odds model                             |
-| probit       | `link = "probit"`                                                           | Latent normal variable                              |
-| cloglog      | `link = "cloglog"`                                                          | Right-skewed; proportional hazards                  |
-| loglog       | `link = "loglog"`                                                           | Left-skewed; mirror of cloglog                      |
-| cauchit      | `link = "cauchit"`                                                          | Heavy-tailed errors                                 |
-| tlink        | `link = "tlink", link_param = list(df = "estimate")`                        | Adjustable tail weight                              |
-| aranda_ordaz | `link = "aranda_ordaz", link_param = list(lambda = "estimate")`             | Logit-cloglog interpolation; $\lambda = 1$ is logit |
-| gev          | `link = "gev", link_param = list(xi = "estimate")`                          | Unconstrained skewness; $\xi = 0$ gives loglog      |
-| sp           | `link = "sp", base = "logit", link_param = list(r = "estimate")`            | Adjustable skewness                                 |
-| log_gamma    | `link = "log_gamma", link_param = list(lambda = "estimate")`                | Generalized probit; $\lambda = 0$ is probit         |
-| aep          | `link = "aep", link_param = list(theta1 = "estimate", theta2 = "estimate")` | Independent tail shapes                             |
+| Link | Usage | When to use |
+|----|----|----|
+| logit | `link = "logit"` | Proportional odds model |
+| probit | `link = "probit"` | Latent normal variable |
+| cloglog | `link = "cloglog"` | Right-skewed; proportional hazards |
+| loglog | `link = "loglog"` | Left-skewed; mirror of cloglog |
+| cauchit | `link = "cauchit"` | Heavy-tailed errors |
+| tlink | `link = "tlink", link_param = list(df = "estimate")` | Adjustable tail weight |
+| aranda_ordaz | `link = "aranda_ordaz", link_param = list(lambda = "estimate")` | Logit-cloglog interpolation; $`\lambda = 1`$ is logit |
+| gev | `link = "gev", link_param = list(xi = "estimate")` | Unconstrained skewness; $`\xi = 0`$ gives loglog |
+| sp | `link = "sp", base = "logit", link_param = list(r = "estimate")` | Adjustable skewness |
+| log_gamma | `link = "log_gamma", link_param = list(lambda = "estimate")` | Generalized probit; $`\lambda = 0`$ is probit |
+| aep | `link = "aep", link_param = list(theta1 = "estimate", theta2 = "estimate")` | Independent tail shapes |
 
 ## References
 
