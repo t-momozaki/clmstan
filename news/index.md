@@ -2,6 +2,8 @@
 
 ## clmstan 0.1.2
 
+CRAN release: 2026-06-29
+
 ### Bug fixes / Compatibility
 
 - Updated compatibility with upcoming changes to

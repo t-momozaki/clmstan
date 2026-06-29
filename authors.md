@@ -7,7 +7,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/t-momozaki/clmstan/blob/main/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/t-momozaki/clmstan/blob/v0.1.2/DESCRIPTION)
 
 Momozaki T (2026). *clmstan: Cumulative Link Models with 'CmdStanR'*. R
 package version 0.1.2, <https://t-momozaki.github.io/clmstan/>.
